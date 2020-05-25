@@ -1,0 +1,70 @@
+p {
+    color: white;
+}
+
+/*  */
+.col-sm-2 {
+    padding: 0;
+}
+.sidenav {
+    background-color: darkcyan;
+    height: 100%;
+    position: fixed;
+    z-index: 1; /* Stay on top */
+    overflow-x: hidden;
+    overflow-y: hidden; /* Disable horizontal scroll */
+}
+
+.col-sm-10 {
+}
+
+.right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* modal */
+.modal {
+}
+
+/*  */
+.user-details {
+    /* display: flex; */
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.247);
+}
+.user-details p {
+    margin-top: 5px;
+    font-size: 18px;
+}
+.user-details:hover {
+    background-color: rgba(255, 255, 255, 0.205);
+}
+
+/* side bar */
+.list-group {
+    margin-top: 10px;
+    background-color: transparent !important;
+}
+.list-group-item {
+    background-color: transparent !important;
+    color: white !important;
+    border: transparent !important;
+    margin-bottom: 0px;
+}
+.list-group-item:hover {
+    background-color: rgba(255, 255, 255, 0.205) !important;
+}
+.active {
+    background-color: rgba(255, 255, 255, 0.315) !important;
+}
+
+/* talbe */
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
+    background-color: rgba(189, 189, 189, 0.219) !important;
+}

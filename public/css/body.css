@@ -1,0 +1,81 @@
+/*  */
+.containerCustom p,
+h3,
+h4 {
+    color: rgb(36, 36, 36) !important;
+}
+.containerCustom span {
+    color: rgb(118, 118, 119);
+}
+.col-sm-3 {
+    margin: 0px;
+    padding: 0px;
+}
+
+/*card item*/
+.card {
+    border-radius: 0px;
+    border: 2px solid rgb(163, 60, 63);
+    margin: 10px;
+}
+.card:hover {
+    cursor: pointer;
+    background-color: #eceff1d7;
+}
+.card-body {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* text card */
+h4.card-title {
+    margin-top: 0px;
+    margin-bottom: 7px;
+}
+p.card-text {
+    text-transform: uppercase;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+.card-img-top {
+    width: 100%;
+}
+
+/*slideshow banner  */
+.slideshow {
+    overflow: hidden;
+}
+.sliding-background {
+    background: url("https://brand.assets.adidas.com/image/upload/f_auto,q_auto,fl_lossy/viVN/Images/originals-ss20-superstar-drop2-launch-ribbon-plp-v3_tcm337-450390.jpg")
+        repeat-x;
+    height: 50px;
+    width: 5076px;
+    animation: slide 10s linear infinite;
+}
+@keyframes slide {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-1692px, 0, 0);
+    }
+}
+
+/*  */
+.twoOption {
+    margin: 12px;
+}
+.colImage1 {
+    background-image: url("https://brand.assets.adidas.com/image/upload/f_auto,q_auto,fl_lossy/viVN/Images/running-ss20-faster-than-launch-hp-teaser-large-family-d_tcm337-467656.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.colImage1 .col {
+    margin-top: 190px;
+}
+
