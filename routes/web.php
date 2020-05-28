@@ -34,24 +34,36 @@ Route::get('/', function () {
     return redirect()->route('admin');
 });
 
-Route::resource('products','ProductController');
-
+Route::resource('product', 'ProductController');
+Route::resource('brand', 'BrandController');
+Route::resource('category', 'CategoryController');
 /**
  * adminPanel
  */
 Route::get('admin', function () {
-    $data = array();
     $data['products'] = Product::all();
     $data['product_brands'] = ProductBrand::all();
     $data['product_category'] = Category::all();
 
-    return view('admin.product.admin', ['data' => $data]);
+    $productsData = Product::all();
+    $categoriesData = Category::all();
+    $brandsData = ProductBrand::all();
+
+    return view('admin.product.admin', [
+        'data' => $data,
+        'categoriesData' => $categoriesData,
+        'brandsData' => $brandsData,
+        'productsData' => $productsData
+    ]);
 })->name('admin');
 
 Route::get('admin/brand', function () {
-    return view('admin.brands.index');
+    $brandsData = ProductBrand::all();
+
+    return view('admin.brand.index', ['brandsData' => $brandsData]);
 })->name('admin/brand');
 
-Route::get('admin/user', function () {
-    return view('admin.users.index');
-})->name('admin/user');
+Route::get('admin/category', function () {
+    $categoryData = Category::all();
+    return view('admin.category.index',['categoryData' => $categoryData]);
+})->name('admin/category');

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductRequest;
-use App\Product;
+use App\Category;
+use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view(
-            'product.index',
-            ['products' => $products]
-        );
+        //
     }
 
     /**
@@ -28,7 +24,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return route('product.store');
+        return route('category.store');
     }
 
     /**
@@ -37,13 +33,13 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductRequest $request)
+    public function store(Request $request)
     {
-        $product = Product::create($request->all());
-        if ($product) {
-            return redirect('admin');
+        $category = Category::create($request->all());
+        if ($category) {
+            return redirect('admin/category');
         }
-        return redirect()->route('product.create');
+        return redirect()->route('category.create');
     }
 
     /**
@@ -65,7 +61,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        return route('product.update',$id);
+       return route('category.update', $id);
     }
 
     /**
@@ -75,14 +71,14 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $editProduct = Product::find($id);
-        $editProduct->update($request->all());
-        if ($editProduct) {
-            return redirect('admin');
+        $editCategory = Category::find($id);
+        $editCategory->update($request->all());
+        if ($editCategory) {
+            return redirect('admin/category');
         }
-        return redirect()->route('product.update');
+        return redirect()->route('category.update');
     }
 
     /**
@@ -93,8 +89,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        Product::findOrFail($id)->delete();
-
-        return redirect('admin');
+        Category::findOrFail($id)->delete();
+        return redirect('admin/category');
     }
 }

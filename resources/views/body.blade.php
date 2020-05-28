@@ -1,9 +1,9 @@
 @extends('layouts.master')
-    <style>
-        body {
-            background-color: #4d3534 !important;
-        }
-    </style>
+<style>
+    body {
+        background-color: #4d3534 !important;
+    }
+</style>
 <!-- slide -->
 <div class="container-fluid" style="width:100%; padding: 0px 0px 12px 0px;">
     <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="5000">

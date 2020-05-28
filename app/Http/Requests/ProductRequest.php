@@ -46,7 +46,7 @@ class ProductRequest extends FormRequest
             'image.url' => trans('product.img_error_url'),
 
             'price.required' => trans('product.price_error_required'),
-            'price.numeric' => trans('product.price_error_numberic'),
+            'price.numeric' => trans('product.price_error_numeric'),
 
             'product_brands_id.required' => trans('product.brand_error_required'),
             'categories_id.required' => trans('product.category_error_required'),

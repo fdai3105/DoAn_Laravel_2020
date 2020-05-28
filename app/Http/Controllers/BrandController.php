@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductRequest;
-use App\Product;
+use App\Http\Requests\BrandRequest;
+use App\ProductBrand;
+use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view(
-            'product.index',
-            ['products' => $products]
-        );
+        //
     }
 
     /**
@@ -28,7 +25,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return route('product.store');
+        return route('brand.store');
     }
 
     /**
@@ -37,13 +34,13 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductRequest $request)
+    public function store(BrandRequest $request)
     {
-        $product = Product::create($request->all());
-        if ($product) {
-            return redirect('admin');
+        $brand = ProductBrand::create($request->all());
+        if ($brand) {
+            return redirect('admin/brand');
         }
-        return redirect()->route('product.create');
+        return redirect()->route('brand.create');
     }
 
     /**
@@ -65,7 +62,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        return route('product.update',$id);
+        return route('brand.update', $id);
     }
 
     /**
@@ -75,14 +72,14 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductRequest $request, $id)
+    public function update(BrandRequest $request, $id)
     {
-        $editProduct = Product::find($id);
-        $editProduct->update($request->all());
-        if ($editProduct) {
-            return redirect('admin');
+        $editBrand = ProductBrand::find($id);
+        $editBrand->update($request->all());
+        if ($editBrand) {
+            return redirect('admin/brand');
         }
-        return redirect()->route('product.update');
+        return redirect()->route('brand.update');
     }
 
     /**
@@ -93,8 +90,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        Product::findOrFail($id)->delete();
-
-        return redirect('admin');
+        ProductBrand::findOrFail($id)->delete();
+        return redirect('admin/brand');
     }
 }

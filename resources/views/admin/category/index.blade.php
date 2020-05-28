@@ -9,7 +9,7 @@
 
         <!-- right panel -->
         <div class="col-sm-10" style="background-color:white;margin-left: 16.5%">
-            @include('admin.product.rightpanel')
+            @include('admin.category.rightpanel');
         </div>
     </div>
 </div>

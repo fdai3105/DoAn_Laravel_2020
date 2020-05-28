@@ -12,6 +12,8 @@ class ProductBrand extends Model
 
     public $timestamp = true;
 
-    
+    public function product() {
+        return $this->hasMany(Product::class,'product_id');
+    }
 
 }
