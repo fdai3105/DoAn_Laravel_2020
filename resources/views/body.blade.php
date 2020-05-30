@@ -60,14 +60,14 @@
 <div class="container-fluid bg-3 containerCustom">
     <h3 style="text-align: center;">Các sản phẩm hot trong ngày</h3><br>
     <div class="row">
-        @foreach($products['products'] as $key => $data)
+        @foreach($products as $products)
         <div class="col-sm-3">
             <div class="card">
-                <img class="card-img-top" src="{{$data->image}}" alt="Card image">
+                <img class="card-img-top" src="{{$products->image}}" alt="Card image">
                 <div class="card-body">
-                    <p class="card-text">{{$data->productsBrand->name}}</p>
-                    <h4 class="card-title">{{$data->name}}</h4>
-                    <p style="text-align:right; font-size: 18px" class="card-text">{{$data->price}}00.000 ₫</p>
+                    <p class="card-text">{{$products->productBrand->name}}</p>
+                    <h4 class="card-title">{{$products->name}}</h4>
+                    <p style="text-align:right; font-size: 18px" class="card-text">{{$products->price}}00.000 ₫</p>
                 </div>
             </div>
         </div>

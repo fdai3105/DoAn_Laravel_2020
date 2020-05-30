@@ -15,7 +15,9 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        $brands = ProductBrand::all();
+
+        return view('admin.brand.index', ['brandsData' => $brands]);
     }
 
     /**
@@ -77,9 +79,9 @@ class BrandController extends Controller
         $editBrand = ProductBrand::find($id);
         $editBrand->update($request->all());
         if ($editBrand) {
-            return redirect('admin/brand');
+            return redirect()->route('brands.index');
         }
-        return redirect()->route('brand.update');
+        return redirect()->route('brands.edit');
     }
 
     /**
@@ -91,6 +93,6 @@ class BrandController extends Controller
     public function destroy($id)
     {
         ProductBrand::findOrFail($id)->delete();
-        return redirect('admin/brand');
+        return redirect('admin/brands');
     }
 }

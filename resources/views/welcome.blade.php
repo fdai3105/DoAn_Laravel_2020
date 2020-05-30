@@ -34,7 +34,7 @@
 
             <!--  -->
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ route('admin') }}"><span class="glyphicon glyphicon-user"></span> Admin Panel</a></li>
+                <li><a href="{{ url('admin') }}"><span class="glyphicon glyphicon-user"></span> Admin Panel</a></li>
             </ul>
         </div>
     </nav>

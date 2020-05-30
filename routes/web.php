@@ -1,12 +1,6 @@
 <?php
 
-use App\Category;
-use App\Product;
-use App\ProductBrand;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Validator;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,51 +13,17 @@ use Illuminate\Support\Facades\Validator;
 |
 */
 
-Route::get('/', function () {
-    $products = array();
-    $products['product_brands'] = ProductBrand::all();
-    $products['products'] = Product::all();
+Route::get('/', 'HomeController@index');
 
-    $categories = array();
-    $categories = Category::all();
 
-    // return view('welcome', [
-    //     'products' => $products,
-    //     'categories' => $categories
-    // ]);
-    return redirect()->route('admin');
-});
-
-Route::resource('product', 'ProductController');
-Route::resource('brand', 'BrandController');
-Route::resource('category', 'CategoryController');
 /**
  * adminPanel
  */
-Route::get('admin', function () {
-    $data['products'] = Product::all();
-    $data['product_brands'] = ProductBrand::all();
-    $data['product_category'] = Category::all();
-
-    $productsData = Product::all();
-    $categoriesData = Category::all();
-    $brandsData = ProductBrand::all();
-
-    return view('admin.product.admin', [
-        'data' => $data,
-        'categoriesData' => $categoriesData,
-        'brandsData' => $brandsData,
-        'productsData' => $productsData
-    ]);
-})->name('admin');
-
-Route::get('admin/brand', function () {
-    $brandsData = ProductBrand::all();
-
-    return view('admin.brand.index', ['brandsData' => $brandsData]);
-})->name('admin/brand');
-
-Route::get('admin/category', function () {
-    $categoryData = Category::all();
-    return view('admin.category.index',['categoryData' => $categoryData]);
-})->name('admin/category');
+Route::prefix('admin')->group(function () {
+    Route::get('/', function () {
+        return view('admin.index');
+    })->name('index');
+    Route::resource('products', 'ProductController');
+    Route::resource('brands', 'BrandController');
+    Route::resource('categories', 'CategoryController');
+});

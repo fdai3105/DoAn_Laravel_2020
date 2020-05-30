@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use App\Product;
+use App\ProductBrand;
+use App\Category;
 
 class ProductController extends Controller
 {
@@ -14,11 +16,15 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view(
-            'product.index',
-            ['products' => $products]
-        );
+        $productsData = Product::all();
+        $categoriesData = Category::all();
+        $brandsData = ProductBrand::all();
+
+        return view('admin.product.index', [
+            'productsData' => $productsData,
+            'brandsData' => $brandsData,
+            'categoriesData' => $categoriesData
+        ]);
     }
 
     /**
@@ -28,7 +34,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return route('product.store');
+        return route('products.create');
     }
 
     /**
@@ -43,7 +49,7 @@ class ProductController extends Controller
         if ($product) {
             return redirect('admin');
         }
-        return redirect()->route('product.create');
+        return redirect()->route('products.create');
     }
 
     /**
@@ -65,7 +71,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        return route('product.update',$id);
+        return route('products.update', $id);
     }
 
     /**
@@ -80,9 +86,9 @@ class ProductController extends Controller
         $editProduct = Product::find($id);
         $editProduct->update($request->all());
         if ($editProduct) {
-            return redirect('admin');
+            return redirect()->route('products.index');
         }
-        return redirect()->route('product.update');
+        return redirect()->route('products.edit');
     }
 
     /**
@@ -94,7 +100,6 @@ class ProductController extends Controller
     public function destroy($id)
     {
         Product::findOrFail($id)->delete();
-
-        return redirect('admin');
+        return redirect('admin/products');
     }
 }
