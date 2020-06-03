@@ -16,7 +16,8 @@ $factory->define(Product::class, function (Faker $faker) {
         'name' => $faker->name,
         'desc' => $faker->text,
         'image' => 'https://via.placeholder.com/640x480.png?text=fdaiBlog',
-        'price' => $faker->randomDigitNotNull,
+        'price' => $faker->numberBetween($min = 1000, $max = 100000000),
+        'vote' => $faker->numberBetween($min = 0, $max = 5),
         
         'product_brands_id' => $faker->randomElement($productBrands),
         'categories_id' => $faker->randomElement($categories)

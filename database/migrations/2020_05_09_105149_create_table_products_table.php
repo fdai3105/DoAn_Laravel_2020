@@ -19,6 +19,7 @@ class CreateTableProductsTable extends Migration
             $table->string('desc');
             $table->string('image');
             $table->string('price');
+            $table->integer('vote');
 
             $table->integer('product_brands_id');
             $table->foreign('product_brands_id')->references('id')

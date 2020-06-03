@@ -1,81 +1,240 @@
-/*  */
-.containerCustom p,
-h3,
-h4 {
-    color: rgb(36, 36, 36) !important;
+h4,
+p {
+    color: rgb(51, 51, 51) !important;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
 }
-.containerCustom span {
-    color: rgb(118, 118, 119);
-}
-.col-sm-3 {
-    margin: 0px;
-    padding: 0px;
-}
-
 /*card item*/
-.card {
-    border-radius: 0px;
-    border: 2px solid rgb(163, 60, 63);
-    margin: 10px;
-}
 .card:hover {
     cursor: pointer;
     background-color: #eceff1d7;
 }
-.card-body {
-    padding-left: 10px;
-    padding-right: 10px;
+/*  */
+.two-option {
+    margin-top: 20px;
 }
-
-/* text card */
-h4.card-title {
-    margin-top: 0px;
-    margin-bottom: 7px;
+.first-col {
+    position: relative;
 }
-p.card-text {
-    text-transform: uppercase;
-    margin-top: 6px;
-    margin-bottom: 6px;
-}
-.card-img-top {
+.first-col img {
+    height: 100%;
     width: 100%;
 }
-
-/*slideshow banner  */
-.slideshow {
-    overflow: hidden;
+.first-col .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
 }
-.sliding-background {
-    background: url("https://brand.assets.adidas.com/image/upload/f_auto,q_auto,fl_lossy/viVN/Images/originals-ss20-superstar-drop2-launch-ribbon-plp-v3_tcm337-450390.jpg")
-        repeat-x;
-    height: 50px;
-    width: 5076px;
-    animation: slide 10s linear infinite;
-}
-@keyframes slide {
-    0% {
-        transform: translate3d(0, 0, 0);
-    }
-    100% {
-        transform: translate3d(-1692px, 0, 0);
-    }
-}
-
-/*  */
-.twoOption {
-    margin: 12px;
-}
-.colImage1 {
-    background-image: url("https://brand.assets.adidas.com/image/upload/f_auto,q_auto,fl_lossy/viVN/Images/running-ss20-faster-than-launch-hp-teaser-large-family-d_tcm337-467656.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    display: flex;
+.first-col .overlay h4 {
+    color: white !important;
+    font-size: 30px;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     text-align: center;
-    align-items: center;
-    justify-content: center;
 }
-.colImage1 .col {
-    margin-top: 190px;
+.first-col .overlay p {
+    color: white !important;
+    font-size: ;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+    text-align: center;
 }
 
+/* heading */
+.video-info {
+    position: relative;
+}
+.video-info .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #0000008a;
+}
+.video-info .overlay h4 {
+    color: white !important;
+    font-size: 30px;
+    position: absolute;
+    top: 40%;
+    left: 15%;
+    text-align: center;
+}
+.overlay button {
+    font-size: 18px;
+    position: absolute;
+    top: 47%;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+    left: 15%;
+    text-align: center;
+}
+
+/* adidas category */
+.home-adidas {
+    margin-top: 20px;
+}
+.home-adidas img {
+    width: 100%;
+}
+.adidas-item {
+    position: relative;
+}
+.adidas-item .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: 0.5s ease;
+    background-color: rgb(0, 0, 0);
+}
+.adidas-item:hover .overlay {
+    opacity: 0.5;
+}
+.adidas-item .overlay h4 {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+/* salah banner */
+.salah-banner {
+    margin-top: 20px;
+    position: relative;
+}
+.salah-banner .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 1;
+}
+.salah-banner .overlay h4 {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 18%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+/* product card  */
+.product {
+    margin-bottom: 15px;
+}
+.product .border {
+    border: 1px solid #0000008a;
+    position: relative;
+}
+.border .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    background-color: rgba(83, 83, 83, 0.336);
+}
+.border .overlay:hover {
+    opacity: 1;
+}
+.product img {
+    width: 100%;
+}
+.product-body {
+    padding: 0px 10px 0 10px;
+}
+.product-body p {
+    margin: 0px;
+}
+.product-body #cate {
+    font-size: 14px;
+}
+.product-body #name {
+    font-size: 16px;
+    font-weight: 500;
+}
+.product-body #price {
+    font-weight: bold;
+    color: #4b1111c9 !important;
+    text-align: right;
+}
+.fa-star {
+    color: #00000033 !important;
+}
+.checked {
+    color: darkorange !important;
+}
+
+/* product item */
+.product-item h5 {
+    color: rgb(131, 131, 131);
+}
+.product-item .text-title {
+    margin-bottom: 0px !important;
+}
+.product-item .text-price {
+    font-size: 16px;
+}
+.product-item .text-desc {
+}
+.add-to-cart {
+    text-transform: uppercase;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* footer */
+.footer {
+    margin-top: 50px;
+    padding: 10px 20px 20px 20px;
+}
+.footer .title {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 500;
+    color: white !important;
+}
+.footer p {
+    color: #ffffff80 !important;
+    margin: 0px;
+}
+.footer .fa {
+    margin-right: 10px;
+    font-size: 25px;
+    color: #ffffff80 !important;
+}

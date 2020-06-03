@@ -1,27 +1,34 @@
-@extends('layouts.admin')
+@extends('admin.index')
 
 @section('content')
-<div>
-    <div class="row">
-        <div class="col-lg-6">
-            <br>
-            <h4>{{$categoriesData->count()}} Danh Mục</h4>
-        </div>
-
-        <!-- add Modal -->
-        <div class="col-lg-6 right">
-            <div style="margin-top:20px">
-                <button type="btn" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addModal">
-                    <i class="fa fa-plus"></i> Thêm Danh Mục
-                </button>
+<div class="col-sm-10" style="background-color:white;margin-left: 16.69%; padding: 0;">
+    <!-- header -->
+    <div class="container-fluid">
+        <div class="row header">
+            <div class="col-2" style="display:flex">
+                <img src="https://img.icons8.com/material/24/ffffff/sorting-answers--v1.png" />
+                <h5 style="vertical-align:middle">Products</h5>
             </div>
+            <div class="col-10" style="text-align: end;">
+                <h5>{{$categoriesData->count()}} Items</h5>
+            </div>
+        </div>
+    </div>
+
+    <!-- sub-header -->
+    <div class="row sub-header">
+        <!-- add Modal -->
+        <div class="col-12 right">
+            <button type="btn" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addModal">
+                <i class="fa fa-plus"></i> Thêm Danh Mục
+            </button>
 
             <!-- add modal -->
             @include('admin.category.partials.add_modal')
         </div>
     </div>
 
-    <br>
+    <!-- display errors -->
     @include('common.errors')
 
     <!-- table -->

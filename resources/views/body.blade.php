@@ -1,88 +1,99 @@
-@extends('layouts.master')
-<style>
-    body {
-        background-color: #4d3534 !important;
-    }
-</style>
-<!-- slide -->
-<div class="container-fluid" style="width:100%; padding: 0px 0px 12px 0px;">
-    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="5000">
-        <!-- Indicators -->
-        <!-- <ol class="carousel-indicators">
-                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2"></li>
-            </ol> -->
+@extends('home')
 
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner">
-            <div class="item active">
-                <img src="https://i.imgur.com/abnARsD.png" alt="New york">
-            </div>
-            <div class="item">
-                <img src="https://i.imgur.com/4zpKnVh.png" alt="New york">
-            </div>
-            <div class="item">
-                <img src="https://i.imgur.com/p2Tousf.png" alt="New york">
-            </div>
-        </div>
-
-        <!-- Left and right controls -->
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-            <span class="sr-only">Next</span>
-        </a>
+@section('body')
+<div class="container-fluid video-info" style="padding: 0px;">
+    <video width="100%" loop autoplay muted src="https://brand.assets.adidas.com/video/upload/q_auto,vc_auto/video/upload/Hometeam-Hero-Ambient-MH-BLUE_1-DT_h3xpw5.mp4" id="video1"></video>
+    <div class="overlay">
+        <h4>BE A HERO FOR THE HEROES</h4>
+        <button type="button" class="btn btn-dark">Join With Us Now
+            <i class="fa fa-angle-right"></i>
+        </button>
     </div>
 </div>
 
-<div class="container-fluid twoOption">
+<div class="container-fluid two-option">
     <div class="row">
-        <div class="col-md-6 colImage1" style="height: 350px">
-            <div class="col">
-                <h1>FAST IS HERE
-                </h1>
-                <p>A collection of running shoes to suit all kinds of runners.</p>
-                <button type="button" class="btn btn-light">Click here</button>
-            </div>
+        <div class="col-md-6 first-col">
+            <img src=" https://brand.assets.adidas.com/image/upload/f_auto,q_auto,fl_lossy/enUS/Images/outdoor-ss20-outdoorclp-dotcom-mh-large-d-1_tcm221-439473.jpg">
+            <div class="overlay">
+                <h4>ADIDAS OUTDOOR</h4>
+                <p>PROTECTION FROM THE ELEMENTS WITH <br> PERFORMANCE GEAR MADE TO WEAR OUTDOORS, MOUNTAINS OR CITY.</p>
 
+            </div>
         </div>
-        <div class=" col-md-6 colImage2" style="height: 350px">
+
+        <div class="col-md-6" style="height: 350px">
             <iframe width="717.600" height="350" src="https://www.youtube.com/embed/Rwk5PdpTxSU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
     </div>
+
 </div>
 
-<!-- product hot -->
-<div class="container-fluid bg-3 containerCustom">
-    <h3 style="text-align: center;">Các sản phẩm hot trong ngày</h3><br>
+<div class="container-fluid home-adidas">
+    <h4>More Adidas</h4>
     <div class="row">
-        @foreach($products as $products)
-        <div class="col-sm-3">
-            <div class="card">
-                <img class="card-img-top" src="{{$products->image}}" alt="Card image">
-                <div class="card-body">
-                    <p class="card-text">{{$products->productBrand->name}}</p>
-                    <h4 class="card-title">{{$products->name}}</h4>
-                    <p style="text-align:right; font-size: 18px" class="card-text">{{$products->price}}00.000 ₫</p>
+        <div class="col-3 ">
+            <a href="">
+                <div class="adidas-item">
+                    <img src="https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy/cd1631e9d6fb48ccaedcaafc0106320f_9366/Ultraboost_20_Shoes_White_EF1042_01_standard.jpg" alt="">
+                    <div class="overlay">
+                        <h4>Adidas Shoes</h4>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
-        @endforeach
+        <div class="col-3 ">
+            <a href="">
+                <div class="adidas-item">
+                    <img src="https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy/73cf26589691457bbeb2ab9f00858c31_9366/Oversized_T_Shirt_Beige_GM6677_21_model.jpg" alt="">
+                    <div class="overlay">
+                        <h4>Adidas Clothing</h4>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-3 ">
+            <a href="">
+                <div class="adidas-item">
+                    <img src="https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy/88af3ea09aca4b8e80b2ab75011a54a6_9366/Premium_Essentials_Toploader_Backpack_Black_GD5004_01_standard.jpg" alt="">
+                    <div class="overlay">
+                        <h4>Adidas Accessories</h4>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-3 ">
+            <a href="">
+                <div class="adidas-item">
+                    <img src="https://images.milled.com/2019-06-10/se0dEsHJpbflr6Hr/nbwkgIhD2MSo.gif" alt="">
+                    <div class="overlay">
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
 
-<!-- sale banner -->
-<div class=".container-fluid" style="background-color: #EF4B50; text-align: center;color: #fff;
-                                        padding-top: 20px;padding-bottom: 20px">
-    <h1 style="font-weight: 800">Sale off 30%</h1>
-    <p style="font-size:20px">Đừng chần chừ-thời gian có hạn</p>
+<div class="container-fluid salah-banner">
+    <div class="row">
+        <div class="col-9" style="padding: 0px;">
+            <video width="100%" loop autoplay playsinline muted src="https://brand.assets.adidas.com/image/upload/q_auto,vc_auto/viVN/Images/91743_LACE_Adicolor_DualGender_MASTHEAD_S_DT_1920x800_HP_tcm337-494923.mp4" __idm_id__="329040899"></video>
+            <div class="overlay">
+                <h4>ADICOLOR RETURNS
+                </h4>
+            </div>
+        </div>
+        <div class="col" style="background-color:darkorange;text-align:center;color:white">
+            <div style="margin-top: 40%;">
+                <h4>ĐĂNG KÝ NHẬN THÔNG TIN CẬP NHẬT VÀ ƯU ĐÃI QUA EMAIL!</h4>
+                <form>
+                    <div class="form-group">
+                        <input style="background-color: #0000002a;border: #0000;color: white" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                    </div>
+                    <button style="width: 50%;" type="submit" class="btn btn-dark">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-
-<!-- slideshow banner -->
-<div class="slideshow">
-    <div class="sliding-background"></div>
-</div>
+@endsection

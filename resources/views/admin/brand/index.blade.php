@@ -1,27 +1,34 @@
-@extends('layouts.admin')
+@extends('admin.index')
 
 @section('content')
-<div>
-    <div class="row">
-        <div class="col-lg-6">
-            <br>
-            <h4>{{$brandsData->count()}} Hãng</h4>
-        </div>
-
-        <!-- add modal -->
-        <div class="col-lg-6 right">
-            <div style="margin-top:20px">
-                <button type="btn" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addModal">
-                    <i class="fa fa-plus"></i> Thêm Hãng
-                </button>
+<div class="col-sm-10" style="background-color:white;margin-left: 16.69%; padding: 0px;">
+    <!-- header -->
+    <div class="container-fluid">
+        <div class="row header">
+            <div class="col-2" style="display:flex">
+                <img src="https://img.icons8.com/material/24/ffffff/branding.png" />
+                <h5 style="vertical-align:middle">Brands</h5>
             </div>
+            <div class="col-10" style="text-align: end;">
+                <h5>{{$brandsData->count()}} Items</h5>
+            </div>
+        </div>
+    </div>
+
+    <!-- sub-header -->
+    <div class="row sub-header">
+        <!-- add modal -->
+        <div class="col-12 right">
+            <button type="btn" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addModal">
+                <i class="fa fa-plus"></i> Thêm Hãng
+            </button>
 
             <!-- add modal -->
             @include('admin.brand.partials.add_modal')
         </div>
     </div>
 
-    <br>
+    <!-- display errors -->
     @include('common.errors')
 
     <!-- table -->

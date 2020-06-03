@@ -1,5 +1,8 @@
 <?php
 
+use App\Category;
+use App\Product;
+use App\ProductBrand;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,15 +17,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomeController@index');
-
+Route::get('product/{name}', 'HomeController@productItem')->name('product');
+Route::get('category/{name}', 'HomeController@categoryFilter')->name('category');
+Route::get('brand/{name}', 'HomeController@brandFilter')->name('brand');
 
 /**
  * adminPanel
  */
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {
-        return view('admin.index');
-    })->name('index');
+        $products = Product::all();
+        $categories = Category::all();
+        $brands = ProductBrand::all();
+        return view('admin.dashboard.index', [
+            'products' => $products,
+            'categories' => $categories,
+            'brands' => $brands
+        ]);
+    })->name('admin.index');
     Route::resource('products', 'ProductController');
     Route::resource('brands', 'BrandController');
     Route::resource('categories', 'CategoryController');
