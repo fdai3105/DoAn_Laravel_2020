@@ -10,20 +10,23 @@
 
             <!-- body modal -->
             <div class="modal-body">
-                <form action="{{route('categories.store')}}" method="POST" class="form-horizontal">
+                <form class="form-horizontal">
                     {{ csrf_field() }}
 
                     <div class="form-group">
                         <label for="task-name" class="col control-label">Tên Danh Mục</label>
 
                         <div class="col">
-                            <input type="text" name="name" class="form-control">
+                            <input type="text" name="cateName" id="inputCateName" class="form-control">
+                            <div class="invalid-feedback" id="inputCateError">
+                                Please choose a username.
+                            </div>
                         </div>
                     </div>
 
                     <!-- -->
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">
+                        <button type="submit" id="addCateBtn" class="btn btn-success">
                             <i></i>Thêm Danh Mục
                         </button>
                         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Huỷ</button>
@@ -31,6 +34,5 @@
                 </form>
             </div>
         </div>
-
     </div>
 </div>

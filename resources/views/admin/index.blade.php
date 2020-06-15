@@ -1,5 +1,4 @@
 @extends('layouts.master')
-
 <title>Admin Panel</title>
 
 <body>

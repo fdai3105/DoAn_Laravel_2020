@@ -38,8 +38,8 @@
             </li>
         </ul>
     </div>
-    <form class="form-inline" style="margin-bottom: 0px;">
-        <input class="form-control mr-sm-2" type="search" placeholder="Tìm Sản Phẩm..." aria-label="Search">
+    <form class="form-inline" action="{{route('search')}}" method="get" style="margin-bottom: 0px;">
+        <input class="form-control mr-sm-2" name="key" type="search" placeholder="Tìm Sản Phẩm..." aria-label="Search" required oninvalid="this.setCustomValidity('Không được để trống')" oninput="setCustomValidity('')"></input>
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 </nav>

@@ -158,6 +158,9 @@ label.col.control-label {
 button.btn.btn-outline-danger {
     margin-left: 10px;
 }
+#listProInCate dd {
+    margin-bottom: 0px;
+}
 
 /*  */
 .user-details {

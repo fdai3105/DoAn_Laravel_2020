@@ -20,6 +20,8 @@ Route::get('/', 'HomeController@index');
 Route::get('product/{name}', 'HomeController@productItem')->name('product');
 Route::get('category/{name}', 'HomeController@categoryFilter')->name('category');
 Route::get('brand/{name}', 'HomeController@brandFilter')->name('brand');
+Route::get('search', 'HomeController@search')->name('search');
+
 
 /**
  * adminPanel
@@ -35,7 +37,10 @@ Route::prefix('admin')->group(function () {
             'brands' => $brands
         ]);
     })->name('admin.index');
+    
     Route::resource('products', 'ProductController');
     Route::resource('brands', 'BrandController');
     Route::resource('categories', 'CategoryController');
+
+    Route::get('categories/test/{id}', 'CategoryController@test');
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Product;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -39,11 +40,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $category = Category::create($request->all());
-        if ($category) {
-            return redirect()->route('categories.index');
+        if ($request->ajax()) {
+            $category = Category::create($request->all());
+            if ($category) {
+                // return redirect()->route('categories.index');
+                return $category;
+            }
+            return redirect()->route('categories.create');
         }
-        return redirect()->route('categories.create');
     }
 
     /**
@@ -54,7 +58,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = Category::find($id);
+        return response()->json($category);
     }
 
     /**
@@ -65,8 +70,10 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        return route('category.update', $id);
+        $pro = Product::where('categories_id', $id)->get();
+        return response()->json($pro);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -94,6 +101,6 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         Category::findOrFail($id)->delete();
-        return redirect()->route('categories.index');
+        return true;
     }
 }

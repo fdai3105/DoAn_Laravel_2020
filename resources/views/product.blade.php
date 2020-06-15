@@ -23,11 +23,6 @@
                         @endfor
                 </div>
             </div>
-            <h5 style="margin-bottom:0px">Colors</h5>
-            <p></p>
-            <h5 style="margin-bottom:0px">Sizes</h5>
-            <p></p>
-
             <button class="btn btn-dark add-to-cart">Thêm Vào Giỏ <i class="fa fa-cart-plus"></i></button>
         </div>
     </div>

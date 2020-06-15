@@ -47,7 +47,7 @@ class ProductController extends Controller
     {
         $product = Product::create($request->all());
         if ($product) {
-            return redirect('admin');
+            return redirect()->route('products.index');
         }
         return redirect()->route('products.create');
     }
@@ -100,6 +100,6 @@ class ProductController extends Controller
     public function destroy($id)
     {
         Product::findOrFail($id)->delete();
-        return redirect('admin/products');
+        return redirect()->route('products.index');
     }
 }

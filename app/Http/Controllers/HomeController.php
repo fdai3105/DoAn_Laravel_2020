@@ -64,4 +64,24 @@ class HomeController extends Controller
             'brandsData' => $brandsData,
         ]);
     }
+
+    public function search(Request $request)
+    {
+        $productsData = Product::all();
+        $categoriesData = Category::all();
+        $brandsData = ProductBrand::all();
+        
+        if (empty($request->key)) {
+            return redirect()->back();
+        }
+
+        $product = Product::where('name', 'like', '%' . $request->key . '%')->get();
+        return view('search', [
+            'key' => $request->key,
+            'search' => $product,
+            'productsData' => $productsData,
+            'categoriesData' => $categoriesData,
+            'brandsData' => $brandsData,
+        ]);
+    }
 }
