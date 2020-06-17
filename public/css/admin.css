@@ -158,9 +158,6 @@ label.col.control-label {
 button.btn.btn-outline-danger {
     margin-left: 10px;
 }
-#listProInCate dd {
-    margin-bottom: 0px;
-}
 
 /*  */
 .user-details {
@@ -181,6 +178,9 @@ button.btn.btn-outline-danger {
 }
 
 /* talbe */
+dd {
+    margin-bottom: 0px;
+}
 .table-hover tbody tr:hover td,
 .table-hover tbody tr:hover th {
     background-color: rgba(189, 189, 189, 0.219) !important;

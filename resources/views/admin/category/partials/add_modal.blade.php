@@ -10,21 +10,19 @@
 
             <!-- body modal -->
             <div class="modal-body">
-                <form class="form-horizontal">
+                <form class="form-horizontal" id="addCateForm">
                     {{ csrf_field() }}
-
                     <div class="form-group">
                         <label for="task-name" class="col control-label">Tên Danh Mục</label>
-
                         <div class="col">
-                            <input type="text" name="cateName" id="inputCateName" class="form-control">
+                            <input type="text" name="name" id="inputCateName" class="form-control">
                             <div class="invalid-feedback" id="inputCateError">
                                 Please choose a username.
                             </div>
                         </div>
                     </div>
 
-                    <!-- -->
+                    <!--footer-->
                     <div class="modal-footer">
                         <button type="submit" id="addCateBtn" class="btn btn-success">
                             <i></i>Thêm Danh Mục

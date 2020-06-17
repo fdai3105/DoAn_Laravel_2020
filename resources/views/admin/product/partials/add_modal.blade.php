@@ -1,5 +1,5 @@
 <!-- add Modal -->
-<div class="modal fade" id="addModal" role="dialog">
+<div class="modal fade" id="productAddModal" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -11,65 +11,54 @@
 
             <!-- modal body -->
             <div class="modal-body">
-                <form action="{{route('products.store')}}" method="POST" class="form-horizontal">
-                    {{ csrf_field() }}
-
+                <form class="form-horizontal" id="addProductForm">
                     <div class="form-group">
                         <label class="col control-label">Tên sản phẩm</label>
 
                         <div class="col">
-                            <input type="text" name="name" id="task-name" class="form-control">
+                            <input type="text" name="name" id="productInputName" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col control-label">Mô tả</label>
-
                         <div class="col">
-                            <input type="text" name="desc" id="task-name" class="form-control">
+                            <input type="text" name="desc" id="productInputDesc" class="form-control">
                         </div>
-
                     </div>
                     <div class="form-group">
                         <label class="col control-label">Ảnh</label>
-
                         <div class="col">
-                            <input type="text" name="image" id="task-name" class="form-control">
+                            <input type="text" name="image" id="productInputImage" class="form-control">
                         </div>
-
+                    </div>
+                    <div class="form-group">
+                        <label class="col control-label">Đánh giá</label>
+                        <div class="col">
+                            <input type="text" name="vote" id="productInputRating" class="form-control">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="col control-label">Giá</label>
-
                         <div class="col">
-                            <input type="text" name="price" id="task-name" class="form-control">
+                            <input type="text" name="price" id="productInputPrice" class="form-control">
                         </div>
-
                     </div>
                     <div class="form-group">
                         <label class="col control-label">Thương hiệu</label>
-
                         <div class="col">
-                            <select class="form-control" name="product_brands_id">
-                                @foreach($brandsData as $brandsData)
-                                <option value="{{$brandsData->id}}">{{$brandsData->name}}</option>
-                                @endforeach
+                            <select class="form-control" id="productSelectBrand" name="product_brands_id">
                             </select>
                         </div>
-
                     </div>
                     <div class=" form-group">
                         <label class="col control-label">Danh mục</label>
-
                         <div class="col">
-                            <select class="form-control" name="categories_id">
-                                @foreach($categoriesData as $categoriesData)
-                                <option value="{{$categoriesData->id}}">{{$categoriesData->name}}</option>
-                                @endforeach
+                            <select class="form-control" id="productSelectCate" name="categories_id">
                             </select>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">
+                        <button type="submit" id="brandAddSubmit" class="btn btn-success">
                             <i></i>Thêm Hàng
                         </button>
                         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Huỷ</button>

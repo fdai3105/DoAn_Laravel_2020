@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BrandRequest;
+use App\Product;
 use App\ProductBrand;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,6 @@ class BrandController extends Controller
     public function index()
     {
         $brands = ProductBrand::all();
-
         return view('admin.brand.index', ['brandsData' => $brands]);
     }
 
@@ -38,11 +38,14 @@ class BrandController extends Controller
      */
     public function store(BrandRequest $request)
     {
-        $brand = ProductBrand::create($request->all());
-        if ($brand) {
-            return redirect('admin/brand');
+        if ($request->ajax()) {
+            $brand = ProductBrand::create($request->all());
+            if ($brand) {
+                // return redirect('admin/brand');
+                return $brand;
+            }
+            return redirect()->route('brand.create');
         }
-        return redirect()->route('brand.create');
     }
 
     /**
@@ -53,7 +56,8 @@ class BrandController extends Controller
      */
     public function show($id)
     {
-        //
+        $brand = ProductBrand::find($id);
+        return response()->json($brand);
     }
 
     /**
@@ -64,7 +68,8 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
-        return route('brand.update', $id);
+        $brandForm = ProductBrand::findOrFail($id);
+        return response()->json($brandForm);
     }
 
     /**
@@ -93,6 +98,21 @@ class BrandController extends Controller
     public function destroy($id)
     {
         ProductBrand::findOrFail($id)->delete();
-        return redirect('admin/brands');
+        return response()->json(['status' => 'success']);
+    }
+
+    /** 
+     * Find all products in this brand.
+     */
+    public function findProducts($id)
+    {
+        $brandForm = Product::where('product_brands_id', $id)->get();
+        return response()->json($brandForm);
+    }
+
+    public function display()
+    {
+        $brands = ProductBrand::all();
+        return response()->json($brands);
     }
 }

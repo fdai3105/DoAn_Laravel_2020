@@ -1,5 +1,11 @@
 @extends('admin.index')
 
+<head>
+    <title>Sản Phẩm | Admin Panel</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+</head>
+
 @section('content')
 <div class="col-sm-10" style="background-color:white;margin-left: 16.69%; padding :0">
     <!-- header -->
@@ -19,17 +25,16 @@
     <div class="row sub-header">
         <!-- add modal -->
         <div class="col-12 right">
-            <button type="btn" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addModal">
+            <button type="btn" id="productModalAddBtn" class="btn btn-info btn-lg" data-toggle="modal" data-target="#productAddModal">
                 <i class="fa fa-plus"></i> Thêm Product
             </button>
-
-            <!-- add modal -->
-            @include('admin.product.partials.add_modal')
         </div>
     </div>
 
     <!-- display errors -->
     @include('common.errors')
+    @include('admin.product.partials.add_modal')
+    @include('admin.product.partials.edit_modal')
 
     <!-- table -->
     <table class="table table-hover">
@@ -63,12 +68,9 @@
                     <div class="row action-button">
                         <!-- edit button -->
                         <div class="action-edit">
-                            <button type="submit" class="btn btn-primary edit" data-toggle="modal" data-target="#editModal{{$productsData->id}}">
-                                <i class="fa fa-btn fa-edit"></i> Edit
+                            <button type="submit" id="productModalEditBtn" data-id="{{$productsData->id}}" class="btn btn-primary edit">
+                                <i class="fa fa-btn fa-edit"></i> Sửa
                             </button>
-
-                            <!-- edit modal -->
-                            @include('admin.product.partials.edit_modal')
                         </div>
 
                         <!-- delete button -->
@@ -90,3 +92,95 @@
     </table>
 </div>
 @endsection
+
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        //region add brand
+        //show dialog ADD modal by data-target on button tag
+        $('#productModalAddBtn').on('click', function() {
+            // get and set data to select box
+            $.get('brandsDisplay', function(data) {
+                $list = '';
+                data.forEach(element => {
+                    $list += '<option value="' + element.id + '">' + element.name + '</option>';
+                });
+                $('#productSelectBrand').html($list);
+            })
+            $.get('categoriesDisplay', function(data) {
+                $list = '';
+                data.forEach(element => {
+                    $list += '<option value="' + element.id + '">' + element.name + '</option>';
+                });
+                $('#productSelectCate').html($list);
+            })
+        })
+
+        var productInputName = $("#productInputName");
+        var productInputDesc = $("#productInputDesc");
+        var productInputImage = $("#productInputImage");
+        var productInputPrice = $("#productInputPrice");
+        var productInputRating = $("#productInputRating");
+
+        // remove red alert on input box
+        productInputName.on('keyup', function() {
+            productInputName.removeClass("is-invalid");
+        })
+        productInputDesc.on('keyup', function() {
+            productInputDesc.removeClass("is-invalid");
+
+        })
+        productInputImage.on('keyup', function() {
+            productInputImage.removeClass("is-invalid");
+
+        })
+        productInputRating.on('keyup', function() {
+            productInputRating.removeClass("is-invalid");
+        })
+        productInputPrice.on('keyup', function() {
+            productInputPrice.removeClass("is-invalid");
+
+        })
+
+        $("#brandAddSubmit").click(function(e) {
+            e.preventDefault();
+            if (productInputName.val() == '' || productInputDesc.val() == '' ||
+                productInputImage.val() == '' || productInputPrice.val() == '' || productInputRating.val() == '') {
+                if (productInputName.val() == '') {
+                    productInputName.addClass("is-invalid");
+                }
+                if (productInputDesc.val() == '') {
+                    productInputDesc.addClass("is-invalid");
+                }
+                if (productInputImage.val() == '') {
+                    productInputImage.addClass("is-invalid");
+                }
+                if (productInputRating.val() == '') {
+                    productInputRating.addClass("is-invalid");
+                }
+                if (productInputPrice.val() == '') {
+                    productInputPrice.addClass("is-invalid");
+                }
+                return false;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '{{route("products.store")}}',
+                data: $('#addProductForm').serialize(),
+                success: function(data) {
+                    location.reload();
+                    console.log('Add product ajax: ' + JSON.stringify(data));
+                },
+                error: function(data) {
+                    alert(JSON.stringify(data));
+                }
+            })
+        })
+        //endregion
+    })
+</script>

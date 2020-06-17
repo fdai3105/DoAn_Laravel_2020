@@ -47,7 +47,7 @@ class ProductController extends Controller
     {
         $product = Product::create($request->all());
         if ($product) {
-            return redirect()->route('products.index');
+            return response()->json(['status' => 'success']);
         }
         return redirect()->route('products.create');
     }
@@ -71,7 +71,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        return route('products.update', $id);
+        $product = Product::findOrFail($id);
+        return response()->json($product);
     }
 
     /**
@@ -86,7 +87,7 @@ class ProductController extends Controller
         $editProduct = Product::find($id);
         $editProduct->update($request->all());
         if ($editProduct) {
-            return redirect()->route('products.index');
+            return response()->json(['status' => 'success']);
         }
         return redirect()->route('products.edit');
     }
@@ -100,6 +101,6 @@ class ProductController extends Controller
     public function destroy($id)
     {
         Product::findOrFail($id)->delete();
-        return redirect()->route('products.index');
+        return response()->json(['status' => 'success']);
     }
 }

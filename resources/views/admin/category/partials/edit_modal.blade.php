@@ -11,9 +11,9 @@
                 <form id="editCateForm" class="form-horizontal">
                     @method('PUT')
                     <div class="form-group">
-                        <label for="task-name" class="col control-label">Tên sản phẩm</label>
+                        <label for="task-name" class="col control-label">Tên danh mục:</label>
                         <div class="col">
-                            <input type="text" name="name" id="edit-modal-input" class="form-control" value="">
+                            <input type="text" name="name" id="edit-modal-input" class="form-control">
                         </div>
                     </div>
 

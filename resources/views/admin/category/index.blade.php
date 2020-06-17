@@ -13,7 +13,7 @@
         <div class="row header">
             <div class="col-2" style="display:flex">
                 <img src="https://img.icons8.com/material/24/ffffff/sorting-answers--v1.png" />
-                <h5 style="vertical-align:middle">Products</h5>
+                <h5 style="vertical-align:middle">Danh Mục</h5>
             </div>
             <div class="col-10" style="text-align: end;">
                 <h5>{{$categoriesData->count()}} Items</h5>
@@ -25,18 +25,17 @@
     <div class="row sub-header">
         <!-- add Modal -->
         <div class="col-12 right">
-            <button type="btn" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addModal">
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addModal">
                 <i class="fa fa-plus"></i> Thêm Danh Mục
             </button>
-
-            <!-- add modal -->
-            @include('admin.category.partials.add_modal')
         </div>
     </div>
 
     <!-- display errors -->
     @include('common.errors')
-
+    @include('admin.category.partials.add_modal')
+    @include('admin.category.partials.del_modal')
+    @include('admin.category.partials.edit_modal')
 
     <!-- table -->
     <table class="table table-hover" id="cateTable">
@@ -60,15 +59,15 @@
                     <div class="row action-button">
                         <!-- edit button -->
                         <div class="action-edit">
-                            <button type="button" id="modalCateEdit" data-id="{{$categoriesData->id}}" data-toggle="modal" class="btn btn-primary edit">
-                                <i class="fa fa-btn fa-edit"></i> Edit
+                            <button type="button" id="modalCateEditBtn" data-id="{{$categoriesData->id}}" class="btn btn-primary">
+                                <i class="fa fa-btn fa-edit"></i> Sửa
                             </button>
                         </div>
 
                         <!-- delete button -->
                         <div class="action-delete">
-                            <button type="button" id="modalCateDel" data-id="{{$categoriesData->id}}" data-toggle="modal" class="btn btn-danger">
-                                <i class="fa fa-btn fa-trash"></i> Delete
+                            <button type="button" id="modalCateDelBtn" data-id="{{$categoriesData->id}}" class="btn btn-danger">
+                                <i class="fa fa-btn fa-trash"></i> Xoá
                             </button>
                         </div>
                     </div>
@@ -76,9 +75,6 @@
             </tr>
             @endforeach
         </tbody>
-        <!-- display two modal -->
-        @include('admin.category.partials.del_modal')
-        @include('admin.category.partials.edit_modal')
     </table>
 </div>
 @endsection
@@ -91,39 +87,39 @@
             }
         });
 
-        // add
+        //region add
         // show add modal
-        var addCateBtn = $("button[id='addCateBtn']");
-        var doc = document.getElementById("inputCateName");
-        $('#inputCateName').on('keyup', function() {
-            doc.classList.remove("is-invalid");
+        var addCateBtn = $("#addCateBtn");
+        var inputCateName = $("#inputCateName");
+        // remove red alert on input box
+        inputCateName.on('keyup', function() {
+            inputCateName.removeClass("is-invalid");
         })
         addCateBtn.click(function(e) {
             e.preventDefault();
-            var cateName = $('input[name="cateName"]').val();
-            var _token = $('input[name="_token"]').val();
-            if (cateName == '') {
-                doc.classList.add("is-invalid");
+            var inputCateNameVal = $("#inputCateName").val();
+            if (inputCateNameVal == '') {
+                inputCateName.addClass("is-invalid");
                 return false;
             }
             $.ajax({
                 type: 'POST',
                 url: '{{route("categories.store")}}',
-                data: {
-                    _token: _token,
-                    name: cateName
-                },
+                data: $('#addCateForm').serialize(),
                 success: function(data) {
-                    $("#cateTable").load(" #cateTable > *");
-                    $('.toast').toast('show')
-                    $('#addModal').modal('hide');
+                    location.reload();
+                    console.log('Add category ajax: ' + JSON.stringify(data));
+                },
+                error: function(data) {
+                    alert(JSON.stringify(data));
                 }
             })
         })
+        //endregion
 
-        // edit
+        //region edit
         // show edit modal
-        var modalCateEdit = $("button[id= 'modalCateEdit']");
+        var modalCateEdit = $("button[id='modalCateEditBtn']");
         modalCateEdit.click(function() {
             var id = $(this).data("id");
             $.get("categories/" + id, function(data) {
@@ -133,7 +129,6 @@
                 $('#editCateBtn').data('id', id);
             })
         });
-
         // edit action
         var editCateBtn = $("button[id='editCateBtn']");
         editCateBtn.click(function(e) {
@@ -144,17 +139,20 @@
                 url: 'categories/' + id,
                 data: $('#editCateForm').serialize(),
                 success: function(data) {
-                    $('#editCateForm').trigger('reset');
                     $('#editModal').modal('hide');
                     location.reload();
-                    // $("#cateTable").load(location.href + " #cateTable>*", "");
+                    console.log('Edit category ajax: ' + JSON.stringify(data));
                 },
+                error: function(data) {
+                    alert(JSON.stringify(data));
+                }
             })
         })
+        //endregion
 
-        // del
+        //region del
         // show del mođal
-        var modalCateDel = $("button[id='modalCateDel']");
+        var modalCateDel = $("button[id='modalCateDelBtn']");
         modalCateDel.click(function() {
             var id = $(this).data("id");
             $.get("categories/" + id, function(data) {
@@ -172,10 +170,8 @@
                 })
             })
         });
-
         // del action
-        var delCateBtn = $("button[id='delCateBtn']");
-        delCateBtn.click(function(e) {
+        $("button[id='delCateBtn']").click(function(e) {
             e.preventDefault();
             var id = $(this).data("id");
             $.ajax({
@@ -184,8 +180,14 @@
                 success: function(data) {
                     $('#delModal').modal('hide');
                     location.reload();
+                    console.log('Delete category ajax: ' + JSON.stringify(data));
                 },
+                error: function(data) {
+                    alert(data);
+                }
             })
         });
+        //endregion
+        
     })
 </script>

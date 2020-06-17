@@ -15,7 +15,7 @@
                      </dl>
                      <!-- footer-->
                      <div class="modal-footer">
-                         <!-- set data-id bằng ajax ở admin/cate/index dòng 131 -->
+                         <!-- set data-id by ajax in admin/cate/index line 131 -->
                          <button type="submit" id="delCateBtn" class="btn btn-danger">
                              <i class="fa fa-btn fa-trash"></i> Delete
                          </button>

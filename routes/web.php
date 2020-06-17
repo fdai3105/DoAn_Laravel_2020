@@ -42,5 +42,8 @@ Route::prefix('admin')->group(function () {
     Route::resource('brands', 'BrandController');
     Route::resource('categories', 'CategoryController');
 
-    Route::get('categories/test/{id}', 'CategoryController@test');
+    Route::get('brands/findProducts/{id}', 'BrandController@findProducts');
+    Route::get('categoriesDisplay','CategoryController@display');
+    Route::get('brandsDisplay', 'BrandController@display');
 });
+

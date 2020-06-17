@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Requests\CategoryRequest;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -16,10 +17,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view(
-            'admin.category.index',
-            ['categoriesData' => $categories]
-        );
+        return view('admin.category.index', ['categoriesData' => $categories]);
     }
 
     /**
@@ -38,16 +36,14 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        if ($request->ajax()) {
-            $category = Category::create($request->all());
-            if ($category) {
-                // return redirect()->route('categories.index');
-                return $category;
-            }
-            return redirect()->route('categories.create');
+        $category = Category::create($request->all());
+        if ($category) {
+            // return redirect()->route('categories.index');
+            return response()->json(['status' => 'success']);
         }
+        return redirect()->route('categories.create');
     }
 
     /**
@@ -82,12 +78,12 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
         $editCategory = Category::find($id);
         $editCategory->update($request->all());
         if ($editCategory) {
-            return redirect()->route('categories.index');
+            return response()->json(['status' => 'success']);
         }
         return redirect()->route('categories.update');
     }
@@ -101,6 +97,12 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         Category::findOrFail($id)->delete();
-        return true;
+        return response()->json(['status' => 'success']);
+    }
+
+    public function display()
+    {
+        $categories = Category::all();
+        return response()->json($categories);
     }
 }
