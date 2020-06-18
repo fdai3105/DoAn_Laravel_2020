@@ -21,67 +21,11 @@ class HomeController extends Controller
         ]);
     }
 
-    public function categoryFilter($name)
-    {
-        $productsData = Product::all();
+    // call by ajax to use many time
+    // in home.blade.php 
+    public function navbar() {
         $categoriesData = Category::all();
         $brandsData = ProductBrand::all();
-
-        $categoryFilter = Category::where('name', $name)->first();
-        return view('category', [
-            'categoryFilter' => $categoryFilter,
-            'productsData' => $productsData,
-            'categoriesData' => $categoriesData,
-            'brandsData' => $brandsData,
-        ]);
-    }
-
-    public function brandFilter($name)
-    {
-        $productsData = Product::all();
-        $categoriesData = Category::all();
-        $brandsData = ProductBrand::all();
-
-        $brandFilter = ProductBrand::where('name', $name)->first();
-        return view('brand', [
-            'brandFilter' => $brandFilter,
-            'productsData' => $productsData,
-            'categoriesData' => $categoriesData,
-            'brandsData' => $brandsData,
-        ]);
-    }
-
-    public function productItem($name)
-    {
-        $productsData = Product::all();
-        $categoriesData = Category::all();
-        $brandsData = ProductBrand::all();
-
-        $product = Product::where('name', $name)->first();
-        return view('product', [
-            'product' => $product,
-            'categoriesData' => $categoriesData,
-            'brandsData' => $brandsData,
-        ]);
-    }
-
-    public function search(Request $request)
-    {
-        $productsData = Product::all();
-        $categoriesData = Category::all();
-        $brandsData = ProductBrand::all();
-        
-        if (empty($request->key)) {
-            return redirect()->back();
-        }
-
-        $product = Product::where('name', 'like', '%' . $request->key . '%')->get();
-        return view('search', [
-            'key' => $request->key,
-            'search' => $product,
-            'productsData' => $productsData,
-            'categoriesData' => $categoriesData,
-            'brandsData' => $brandsData,
-        ]);
+        return response()->json(['categories' => $categoriesData, 'brands' => $brandsData]);
     }
 }

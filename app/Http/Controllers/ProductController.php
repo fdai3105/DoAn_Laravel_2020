@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
 use App\Product;
 use App\ProductBrand;
@@ -17,39 +18,9 @@ class ProductController extends Controller
     public function index()
     {
         $productsData = Product::all();
-        $categoriesData = Category::all();
-        $brandsData = ProductBrand::all();
-
         return view('admin.product.index', [
-            'productsData' => $productsData,
-            'brandsData' => $brandsData,
-            'categoriesData' => $categoriesData
+            'productsData' => $productsData
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return route('products.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(ProductRequest $request)
-    {
-        $product = Product::create($request->all());
-        if ($product) {
-            return response()->json(['status' => 'success']);
-        }
-        return redirect()->route('products.create');
     }
 
     /**
@@ -58,49 +29,24 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($name)
     {
-        //
+      $product = Product::where('name', $name)->first();
+        return view('product', [
+            'product' => $product
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function search(Request $request)
     {
-        $product = Product::findOrFail($id);
-        return response()->json($product);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(ProductRequest $request, $id)
-    {
-        $editProduct = Product::find($id);
-        $editProduct->update($request->all());
-        if ($editProduct) {
-            return response()->json(['status' => 'success']);
+        if (empty($request->key)) {
+            return redirect()->back();
         }
-        return redirect()->route('products.edit');
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        Product::findOrFail($id)->delete();
-        return response()->json(['status' => 'success']);
+        $product = Product::where('name', 'like', '%' . $request->key . '%')->get();
+        return view('search', [
+            'key' => $request->key,
+            'search' => $product
+        ]);
     }
 }

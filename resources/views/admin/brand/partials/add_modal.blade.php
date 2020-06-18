@@ -11,7 +11,6 @@
             <!-- body modal -->
             <div class="modal-body">
                 <form class="form-horizontal" id="addBrandForm">
-                    {{ csrf_field() }}
                     <div class="form-group">
                         <label for="task-name" class="col control-label">Tên hãng</label>
                         <div class="col">

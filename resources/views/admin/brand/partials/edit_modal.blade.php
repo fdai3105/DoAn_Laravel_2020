@@ -14,6 +14,9 @@
                          <label for="task-name" class="col control-label">Tên hãng:</label>
                          <div class="col">
                              <input type="text" id="brandEditModalInput" name="name" class="form-control">
+                             <div class="invalid-feedback">
+                                 Please choose a username.
+                             </div>
                          </div>
                      </div>
 

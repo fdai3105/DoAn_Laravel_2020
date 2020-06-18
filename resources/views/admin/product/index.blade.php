@@ -35,6 +35,7 @@
     @include('common.errors')
     @include('admin.product.partials.add_modal')
     @include('admin.product.partials.edit_modal')
+    @include('admin.product.partials.del_modal')
 
     <!-- table -->
     <table class="table table-hover" id="productTable">
@@ -75,14 +76,9 @@
 
                         <!-- delete button -->
                         <div class="action-delete">
-                            <form action="{{ route('products.destroy',$productsData->id) }}" class="action-form" method="POST">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
-
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="fa fa-btn fa-trash"></i> Delete
-                                </button>
-                            </form>
+                            <button type="button" id="productModalDelBtn" data-id="{{$productsData->id}}" class="btn btn-danger">
+                                <i class="fa fa-btn fa-trash"></i> Xoá
+                            </button>
                         </div>
                     </div>
                 </td>
@@ -115,15 +111,8 @@
         });
         // style dataTable
         // header
-        $("#productTable_length").next().andSelf().wrapAll('<div class="row dataTableHeader"></div>');
-        $('#productTable_length').addClass("col-6");
-        $('#productTable_filter').addClass("col-6");
-        $('#productTable_length').find("select").addClass("custom-select");
+        $("#productTable_filter").addClass("col-12");
         $('#productTable_filter').find("input").addClass("form-control form-control-sm");
-        // // footer
-        $("#productTable_info").next().andSelf().wrapAll('<div class="row dataTableFooter"></div>');
-        $('#productTable_info').addClass("col-6");
-        $('#productTable_paginate').addClass("col-6");
         //endregion
 
         //region add brand
@@ -208,6 +197,24 @@
 
         //region edit product
         // show edit modal
+        $('#productEditInputName').on('keyup', function() {
+            $('#productEditInputName').removeClass("is-invalid");
+        })
+        $('#productEditInputDesc').on('keyup', function() {
+            $('#productEditInputDesc').removeClass("is-invalid");
+
+        })
+        $('#productEditInputImage').on('keyup', function() {
+            $('#productEditInputImage').removeClass("is-invalid");
+
+        })
+        $('#productEditInputRating').on('keyup', function() {
+            $('#productEditInputRating').removeClass("is-invalid");
+        })
+        $('#productEditInputPrice').on('keyup', function() {
+            $('#productEditInputPrice').removeClass("is-invalid");
+
+        })
         $("button[id='productModalEditBtn']").on('click', function() {
             var id = $(this).data("id");
             $.get("products/" + id + "/edit", function(data) {
@@ -216,9 +223,94 @@
                 $('#productEditInputName').val(data.name);
                 $('#productEditInputDesc').val(data.desc);
                 $('#productEditInputImage').val(data.image);
+                $('#productEditInputRating').val(data.vote);
                 $('#productEditInputPrice').val(data.price);
-                $('#productEditInputRating').val(data.rating);
                 $('#productEditSubmit').data('id', id);
+                // get and set data to select box
+                $.get('brandsDisplay', function(data2) {
+                    $list = '';
+                    data2.forEach(element => {
+                        $list += '<option value="' + element.id + '"' + ((element.id == data.product_brands_id) ? 'selected' : '') + '>' + element.name + '</option>';
+                    });
+                    $('#productEditSelectBrand').html($list);
+                })
+                $.get('categoriesDisplay', function(data3) {
+                    $list = '';
+                    data3.forEach(element => {
+                        $list += '<option value="' + element.id + '"' + ((element.id == data.categories_id) ? 'selected' : '') + '>' + element.name + '</option>';
+                    });
+                    $('#productEditSelectCate').html($list);
+                })
+            })
+        });
+        // edit action
+        $("button[id='productEditSubmit']").click(function(e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+
+            if ($('#productEditInputName').val() == '' || $('#productEditInputDesc').val() == '' ||
+                $('#productEditInputImage').val() == '' || $('#productEditInputRating').val() == '' ||
+                $('#productEditInputPrice').val() == '') {
+                if ($('#productEditInputName').val() == '') {
+                    $('#productEditInputName').addClass("is-invalid");
+                }
+                if ($('#productEditInputDesc').val() == '') {
+                    $('#productEditInputDesc').addClass("is-invalid");
+                }
+                if ($('#productEditInputImage').val() == '') {
+                    $('#productEditInputImage').addClass("is-invalid");
+                }
+                if ($('#productEditInputRating').val() == '') {
+                    $('#productEditInputRating').addClass("is-invalid");
+                }
+                if ($('#productEditInputPrice').val() == '') {
+                    $('#productEditInputPrice').addClass("is-invalid");
+                }
+                return false;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: 'products/' + id,
+                data: $('#editModalProductForm').serialize(),
+                success: function(data) {
+                    $('#productEditModal').modal('hide');
+                    location.reload();
+                    console.log('Edit products ajax: ' + JSON.stringify(data));
+                },
+                error: function(data) {
+                    alert(JSON.stringify(data));
+                }
+            })
+        })
+        //endregion
+
+        //region del brand
+        // show del mođal
+        $("button[id='productModalDelBtn']").click(function() {
+            var id = $(this).data("id");
+            $.get("products/" + id, function(data) {
+                $('#productDelModal').modal('show');
+                $('#productDelModalTitle').html('Xoá ' + data.name + '?');
+                $('#productDelSubmit').data('id', id);
+                $('#countPro').html('Bạn có muốn xoá ' + data.name + '?');
+            })
+        });
+        // del action
+        $("button[id='productDelSubmit']").click(function(e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            $.ajax({
+                type: 'DELETE',
+                url: 'products/' + id,
+                success: function(data) {
+                    $('#productDelModal').modal('hide');
+                    location.reload();
+                    console.log('Delete product ajax: ' + JSON.stringify(data));
+                },
+                error: function(data) {
+                    alert(JSON.stringify(data));
+                }
             })
         });
         //endregion

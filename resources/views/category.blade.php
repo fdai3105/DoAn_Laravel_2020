@@ -1,13 +1,14 @@
 @extends('home')
 
 @section('body')
+
 <body>
     <div class="container-fluid" style="margin-top:30px">
-        <h4 style="text-transform:uppercase">{{$categoryFilter->name}}</h4>
+        <h4 style="text-transform:uppercase">{{$category->name}}</h4>
         <div class="row">
-            @foreach($categoryFilter->product as $categoryFilter)
+            @foreach($category->product as $categoryFilter)
             <div class="col-3 product">
-                <a href="{{route('product',$categoryFilter->name)}}">
+                <a href="{{route('product.show',$categoryFilter->name)}}">
                     <div class="border">
                         <img src="{{$categoryFilter->image}}">
                         <div class="product-body">

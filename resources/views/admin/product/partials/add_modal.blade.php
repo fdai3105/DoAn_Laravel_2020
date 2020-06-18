@@ -14,33 +14,47 @@
                 <form class="form-horizontal" id="addProductForm">
                     <div class="form-group">
                         <label class="col control-label">Tên sản phẩm</label>
-
                         <div class="col">
                             <input type="text" name="name" id="productInputName" class="form-control">
+                            <div class="invalid-tooltip">
+                                Please choose a unique and valid username.
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col control-label">Mô tả</label>
                         <div class="col">
                             <input type="text" name="desc" id="productInputDesc" class="form-control">
+                            <div class="invalid-tooltip">
+                                Please choose a unique and valid username.
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col control-label">Ảnh</label>
                         <div class="col">
                             <input type="text" name="image" id="productInputImage" class="form-control">
+                            <div class="invalid-tooltip">
+                                Please choose a unique and valid username.
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col control-label">Đánh giá</label>
                         <div class="col">
                             <input type="text" name="vote" id="productInputRating" class="form-control">
+                            <div class="invalid-tooltip">
+                                Please choose a unique and valid username.
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col control-label">Giá</label>
                         <div class="col">
                             <input type="text" name="price" id="productInputPrice" class="form-control">
+                            <div class="invalid-tooltip">
+                                Please choose a unique and valid username.
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">

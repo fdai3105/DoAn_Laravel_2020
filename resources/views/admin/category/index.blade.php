@@ -25,7 +25,7 @@
     <div class="row sub-header">
         <!-- add Modal -->
         <div class="col-12 right">
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addModal">
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#cateAddModal">
                 <i class="fa fa-plus"></i> Thêm Danh Mục
             </button>
         </div>
@@ -59,14 +59,14 @@
                     <div class="row action-button">
                         <!-- edit button -->
                         <div class="action-edit">
-                            <button type="button" id="modalCateEditBtn" data-id="{{$categoriesData->id}}" class="btn btn-primary">
+                            <button type="button" id="cateModalEditBtn" data-id="{{$categoriesData->id}}" class="btn btn-primary">
                                 <i class="fa fa-btn fa-edit"></i> Sửa
                             </button>
                         </div>
 
                         <!-- delete button -->
                         <div class="action-delete">
-                            <button type="button" id="modalCateDelBtn" data-id="{{$categoriesData->id}}" class="btn btn-danger">
+                            <button type="button" id="cateModalDelBtn" data-id="{{$categoriesData->id}}" class="btn btn-danger">
                                 <i class="fa fa-btn fa-trash"></i> Xoá
                             </button>
                         </div>
@@ -89,6 +89,8 @@
 
         //region dataTable
         $('#cateTable').DataTable({
+            "paging": false,
+            "info": false,
             'order': [
                 [0, 'asc'],
             ],
@@ -99,30 +101,21 @@
         });
         // style dataTable
         // header
-        $("#cateTable_length").next().andSelf().wrapAll('<div class="row dataTableHeader"></div>');
-        $('#cateTable_length').addClass("col-6");
-        $('#cateTable_filter').addClass("col-6");
-        $('#cateTable_length').find("select").addClass("custom-select");
+        $('#cateTable_filter').addClass("col-12");
         $('#cateTable_filter').find("input").addClass("form-control form-control-sm");
-        // // footer
-        $("#cateTable_info").next().andSelf().wrapAll('<div class="row dataTableFooter"></div>');
-        $('#cateTable_info').addClass("col-6");
-        $('#cateTable_paginate').addClass("col-6");
         //endregion
 
         //region add
         // show add modal
-        var addCateBtn = $("#addCateBtn");
-        var inputCateName = $("#inputCateName");
+        var cateInputName = $("#cateInputName");
         // remove red alert on input box
-        inputCateName.on('keyup', function() {
-            inputCateName.removeClass("is-invalid");
+        cateInputName.on('keyup', function() {
+            cateInputName.removeClass("is-invalid");
         })
-        addCateBtn.click(function(e) {
+        $("#cateAddSubmit").click(function(e) {
             e.preventDefault();
-            var inputCateNameVal = $("#inputCateName").val();
-            if (inputCateNameVal == '') {
-                inputCateName.addClass("is-invalid");
+            if (cateInputName.val() == '') {
+                cateInputName.addClass("is-invalid");
                 return false;
             }
             $.ajax({
@@ -142,27 +135,32 @@
 
         //region edit
         // show edit modal
-        var modalCateEdit = $("button[id='modalCateEditBtn']");
-        modalCateEdit.click(function() {
+        $('#cateInputEditName').on('keyup', function() {
+            $('#cateInputEditName').removeClass("is-invalid");
+        })
+        $("button[id='cateModalEditBtn']").click(function() {
             var id = $(this).data("id");
             $.get("categories/" + id, function(data) {
-                $('#editModal').modal('show');
-                $('#edit-modal-title').html('Sửa ' + data.name + '?');
-                $('#edit-modal-input').val(data.name);
-                $('#editCateBtn').data('id', id);
+                $('#cateEditModal').modal('show');
+                $('#cateEditModalTitle').html('Sửa ' + data.name + '?');
+                $('#cateInputEditName').val(data.name);
+                $('#editCateSubmit').data('id', id);
             })
         });
         // edit action
-        var editCateBtn = $("button[id='editCateBtn']");
-        editCateBtn.click(function(e) {
+        $("button[id='editCateSubmit']").click(function(e) {
             e.preventDefault();
+            if ($('#cateInputEditName').val() == '') {
+                $('#cateInputEditName').addClass("is-invalid");
+                return false;
+            }
             var id = $(this).data("id");
             $.ajax({
                 type: 'POST',
                 url: 'categories/' + id,
                 data: $('#editCateForm').serialize(),
                 success: function(data) {
-                    $('#editModal').modal('hide');
+                    $('#cateEditModal').modal('hide');
                     location.reload();
                     console.log('Edit category ajax: ' + JSON.stringify(data));
                 },
@@ -175,33 +173,36 @@
 
         //region del
         // show del mođal
-        var modalCateDel = $("button[id='modalCateDelBtn']");
-        modalCateDel.click(function() {
+        $("button[id='cateModalDelBtn']").click(function() {
             var id = $(this).data("id");
             $.get("categories/" + id, function(data) {
-                $('#delModal').modal('show');
-                $('#modal-title').html('Xoá ' + data.name + '?');
-                $('#delCateBtn').data('id', id);
+                $('#cateDelModal').modal('show');
+                $('#cateDelModalTitle').html('Xoá ' + data.name + '?');
+                $('#cateDelSubmit').data('id', id);
                 $.get("categories/" + id + "/edit", function(data2) {
                     $('#listProInCate').html("");
-                    var textnode = '';
-                    $('#countPro').html('Lưu ý: ' + Object.keys(data2).length + ' sản phẩm trong danh mục này cũng sẽ bị xoá')
-                    data2.forEach(element => {
-                        textnode += '<dd>' + '- ' + element.name + '</dd>';
-                    });
-                    $('#listProInCate').append(textnode);
+                    if (Object.keys(data2).length > 1) {
+                        var textnode = '';
+                        $('#countPro').html('Lưu ý: ' + Object.keys(data2).length + ' sản phẩm trong danh mục này cũng sẽ bị xoá')
+                        data2.forEach(element => {
+                            textnode += '<dd>' + '- ' + element.name + '</dd>';
+                        });
+                        $('#listProInCate').append(textnode);
+                    } else {
+                        $('#countPro').html('Bạn có muốn xoá "' + data.name + '" ?');
+                    }
                 })
             })
         });
         // del action
-        $("button[id='delCateBtn']").click(function(e) {
+        $("button[id='cateDelSubmit']").click(function(e) {
             e.preventDefault();
             var id = $(this).data("id");
             $.ajax({
                 type: 'DELETE',
                 url: 'categories/' + id,
                 success: function(data) {
-                    $('#delModal').modal('hide');
+                    $('#cateDelModal').modal('hide');
                     location.reload();
                     console.log('Delete category ajax: ' + JSON.stringify(data));
                 },

@@ -1,5 +1,11 @@
 @extends('layouts.master')
 
+<head>
+    <title>Trang Chủ | Admin Panel</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+</head>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/">FDai Store</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,20 +23,14 @@
                     Danh Mục
                 </a>
 
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    @foreach($categoriesData as $categoriesData)
-                    <a class="dropdown-item" href="{{route('category',$categoriesData->name)}}">{{$categoriesData->name}}</a>
-                    @endforeach
+                <div class="dropdown-menu" id="navbarCate" aria-labelledby="navbarDropdownMenuLink">
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Thương Hiệu
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    @foreach($brandsData as $brandsData)
-                    <a class="dropdown-item" href="{{route('brand',$brandsData->name)}}">{{$brandsData->name}}</a>
-                    @endforeach
+                <div class="dropdown-menu" id="navbarBrand" aria-labelledby="navbarDropdownMenuLink">
                 </div>
             </li>
             <li class="nav-item">
@@ -47,3 +47,20 @@
 @yield('body')
 
 @include('layouts.footer')
+
+<script>
+    $(document).ready(function() {
+        $.get('http://127.0.0.1:8000/navbarData', function(data) {
+            cate = '';
+            data.categories.forEach(element => {
+                cate += '<a class="dropdown-item" href="http://127.0.0.1:8000/category/' + element.name + '">' + element.name + '</a>';
+            })
+            $("#navbarCate").append(cate);
+            bra = '';
+            data.brands.forEach(element => {
+                bra += '<a class="dropdown-item" href="http://127.0.0.1:8000/brand/' + element.name + '">' + element.name + '</a>';
+            })
+            $('#navbarBrand').append(bra);
+        })
+    });
+</script>

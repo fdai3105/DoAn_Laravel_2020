@@ -88,7 +88,10 @@
             }
         });
 
+        //region dataTable
         $('#brandTable').DataTable({
+            "paging": false,
+            "info": false,
             'order': [
                 [0, 'asc'],
             ],
@@ -99,15 +102,9 @@
         });
         // style dataTable
         // header
-        $("#brandTable_length").next().andSelf().wrapAll('<div class="row dataTableHeader"></div>');
-        $('#brandTable_length').addClass("col-6");
-        $('#brandTable_filter').addClass("col-6");
-        $('#brandTable_length').find("select").addClass("custom-select");
+        $("#brandTable_filter").addClass("col-12");
         $('#brandTable_filter').find("input").addClass("form-control form-control-sm");
-        // // footer
-        $("#brandTable_info").next().andSelf().wrapAll('<div class="row dataTableFooter"></div>');
-        $('#brandTable_info').addClass("col-6");
-        $('#brandTable_paginate').addClass("col-6");
+        //endregion
 
         //region add brand
         // show add modal by data-target on button tag
@@ -139,6 +136,9 @@
 
         //region edit brand
         // show edit modal
+        $("#brandEditModalInput").on('keyup', function() {
+            $("#brandEditModalInput").removeClass("is-invalid");
+        })
         $("button[id='brandModalEditBtn']").click(function() {
             var id = $(this).data("id");
             $.get("brands/" + id + "/edit", function(data) {
@@ -151,6 +151,10 @@
         // edit action
         $("button[id='editBrandSubmit']").click(function(e) {
             e.preventDefault();
+            if ($("#brandEditModalInput").val() == '') {
+                $("#brandEditModalInput").addClass("is-invalid");
+                return false;
+            }
             var id = $(this).data("id");
             $.ajax({
                 type: 'POST',
@@ -186,7 +190,7 @@
                         });
                         $('#listProInBrand').append(textnode);
                     } else {
-                        $('#countPro').html('Bạn có muốn xoá ' + data.name + '?');
+                        $('#countPro').html('Bạn có muốn xoá "' + data.name + '" ?');
                     }
                 })
             })

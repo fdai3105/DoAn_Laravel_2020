@@ -13,7 +13,7 @@
                     </div>
                 </a>
                 <div class="list-group">
-                    <a href="{{route('admin.index')}}" class="list-group-item {{Route::currentRouteName() == 'index' ? 'active' : ''}}">Bảng điều khiển</a>
+                    <a href="{{route('index')}}" class="list-group-item {{Route::currentRouteName() == 'index' ? 'active' : ''}}">Bảng điều khiển</a>
                     <a href="{{route('products.index')}}" class="list-group-item {{Route::currentRouteName() == 'products.index' ? 'active' : ''}}">Sản Phẩm</a>
                     <a href="{{route('brands.index')}}" class="list-group-item {{Route::currentRouteName() == 'brands.index' ? 'active' : ''}}">Thương Hiệu</a>
                     <a href="{{route('categories.index')}}" class="list-group-item {{Route::currentRouteName() == 'categories.index' ? 'active' : ''}}">Danh Mục</a>

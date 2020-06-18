@@ -17,33 +17,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomeController@index');
-Route::get('product/{name}', 'HomeController@productItem')->name('product');
-Route::get('category/{name}', 'HomeController@categoryFilter')->name('category');
-Route::get('brand/{name}', 'HomeController@brandFilter')->name('brand');
-Route::get('search', 'HomeController@search')->name('search');
-
+Route::get('navbarData', 'HomeController@navbar'); // use in ajax
+Route::resource('category', 'CategoryController');
+Route::resource('brand', 'BrandController');
+Route::resource('product','ProductController');
+Route::get('search', 'ProductController@search')->name('search');
 
 /**
  * adminPanel
  */
 Route::prefix('admin')->group(function () {
-    Route::get('/', function () {
-        $products = Product::all();
-        $categories = Category::all();
-        $brands = ProductBrand::all();
-        return view('admin.dashboard.index', [
-            'products' => $products,
-            'categories' => $categories,
-            'brands' => $brands
-        ]);
-    })->name('admin.index');
+    Route::resource('/', 'admin\AdminController');
     
-    Route::resource('products', 'ProductController');
-    Route::resource('brands', 'BrandController');
-    Route::resource('categories', 'CategoryController');
+    Route::resource('products', 'admin\AdminProductController');
+    Route::resource('brands', 'admin\AdminBrandController');
+    Route::resource('categories', 'admin\AdminCategoryController');
 
-    Route::get('brands/findProducts/{id}', 'BrandController@findProducts');
-    Route::get('categoriesDisplay','CategoryController@display');
-    Route::get('brandsDisplay', 'BrandController@display');
+    Route::get('brands/findProducts/{id}', 'admin\AdminBrandController@findProducts');
+    Route::get('categoriesDisplay', 'admin\AdminCategoryController@display');
+    Route::get('brandsDisplay', 'admin\AdminBrandController@display');
 });
 
