@@ -87,6 +87,29 @@
             }
         });
 
+        //region dataTable
+        $('#cateTable').DataTable({
+            'order': [
+                [0, 'asc'],
+            ],
+            "columnDefs": [{
+                "orderable": false,
+                "targets": 4
+            }]
+        });
+        // style dataTable
+        // header
+        $("#cateTable_length").next().andSelf().wrapAll('<div class="row dataTableHeader"></div>');
+        $('#cateTable_length').addClass("col-6");
+        $('#cateTable_filter').addClass("col-6");
+        $('#cateTable_length').find("select").addClass("custom-select");
+        $('#cateTable_filter').find("input").addClass("form-control form-control-sm");
+        // // footer
+        $("#cateTable_info").next().andSelf().wrapAll('<div class="row dataTableFooter"></div>');
+        $('#cateTable_info').addClass("col-6");
+        $('#cateTable_paginate').addClass("col-6");
+        //endregion
+
         //region add
         // show add modal
         var addCateBtn = $("#addCateBtn");
@@ -188,6 +211,6 @@
             })
         });
         //endregion
-        
+
     })
 </script>

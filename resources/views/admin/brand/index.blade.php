@@ -38,7 +38,7 @@
     @include('admin.brand.partials.del_modal')
 
     <!-- table -->
-    <table class="table table-hover">
+    <table class="table table-hover" id="brandTable">
         <thead>
             <tr class="bg-primary">
                 <th>ID</th>
@@ -81,11 +81,33 @@
 
 <script>
     $(document).ready(function() {
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
+        $('#brandTable').DataTable({
+            'order': [
+                [0, 'asc'],
+            ],
+            "columnDefs": [{
+                "orderable": false,
+                "targets": 4
+            }]
+        });
+        // style dataTable
+        // header
+        $("#brandTable_length").next().andSelf().wrapAll('<div class="row dataTableHeader"></div>');
+        $('#brandTable_length').addClass("col-6");
+        $('#brandTable_filter').addClass("col-6");
+        $('#brandTable_length').find("select").addClass("custom-select");
+        $('#brandTable_filter').find("input").addClass("form-control form-control-sm");
+        // // footer
+        $("#brandTable_info").next().andSelf().wrapAll('<div class="row dataTableFooter"></div>');
+        $('#brandTable_info').addClass("col-6");
+        $('#brandTable_paginate').addClass("col-6");
 
         //region add brand
         // show add modal by data-target on button tag

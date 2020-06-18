@@ -1,6 +1,5 @@
 @extends('layouts.master')
 <title>Admin Panel</title>
-
 <body>
     <div class="container-fluid">
         <div class="row">
@@ -22,7 +21,6 @@
                     <a href="/" class="list-group-item" style="margin-top: 50vh"><i class="fa fa-arrow-left"></i> Back to Home</a>
                 </div>
             </div>
-
             @yield('content')
         </div>
     </div>

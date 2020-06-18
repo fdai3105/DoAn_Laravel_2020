@@ -25,7 +25,7 @@
     <div class="row sub-header">
         <!-- add modal -->
         <div class="col-12 right">
-            <button type="btn" id="productModalAddBtn" class="btn btn-info btn-lg" data-toggle="modal" data-target="#productAddModal">
+            <button type="btn" id="productModalAddBtn" data-target="#productAddModal" data-toggle="modal" class="btn btn-info btn-lg">
                 <i class="fa fa-plus"></i> Thêm Product
             </button>
         </div>
@@ -37,7 +37,7 @@
     @include('admin.product.partials.edit_modal')
 
     <!-- table -->
-    <table class="table table-hover">
+    <table class="table table-hover" id="productTable">
         <thead>
             <tr class="bg-primary">
                 <th>ID</th>
@@ -59,7 +59,7 @@
                 <td>{{$productsData->name}}</td>
                 <td data-toggle="tooltip" data-placement="bottom" title="{{$productsData->desc}}">{{Str::limit($productsData->desc,30)}}</td>
                 <td>{{Str::limit($productsData->image,20)}}</td>
-                <td>{{$productsData->price}}</td>
+                <td>{{number_format($productsData->price,0,'.','.',)}}</td>
                 <td>{{$productsData->productBrand->name}}</td>
                 <td>{{$productsData->category->name}}</td>
                 <td>{{$productsData->created_at}}</td>
@@ -101,6 +101,31 @@
             }
         });
 
+        //region dataTable
+        $('#productTable').DataTable({
+            "paging": false,
+            "info": false,
+            'order': [
+                [0, 'asc'],
+            ],
+            "columnDefs": [{
+                "orderable": false,
+                "targets": 9
+            }]
+        });
+        // style dataTable
+        // header
+        $("#productTable_length").next().andSelf().wrapAll('<div class="row dataTableHeader"></div>');
+        $('#productTable_length').addClass("col-6");
+        $('#productTable_filter').addClass("col-6");
+        $('#productTable_length').find("select").addClass("custom-select");
+        $('#productTable_filter').find("input").addClass("form-control form-control-sm");
+        // // footer
+        $("#productTable_info").next().andSelf().wrapAll('<div class="row dataTableFooter"></div>');
+        $('#productTable_info').addClass("col-6");
+        $('#productTable_paginate').addClass("col-6");
+        //endregion
+
         //region add brand
         //show dialog ADD modal by data-target on button tag
         $('#productModalAddBtn').on('click', function() {
@@ -120,13 +145,11 @@
                 $('#productSelectCate').html($list);
             })
         })
-
         var productInputName = $("#productInputName");
         var productInputDesc = $("#productInputDesc");
         var productInputImage = $("#productInputImage");
         var productInputPrice = $("#productInputPrice");
         var productInputRating = $("#productInputRating");
-
         // remove red alert on input box
         productInputName.on('keyup', function() {
             productInputName.removeClass("is-invalid");
@@ -181,6 +204,23 @@
                 }
             })
         })
+        //endregion
+
+        //region edit product
+        // show edit modal
+        $("button[id='productModalEditBtn']").on('click', function() {
+            var id = $(this).data("id");
+            $.get("products/" + id + "/edit", function(data) {
+                $('#productEditModal').modal('show');
+                $('#editModalTitle').html('Sửa ' + data.name + '?');
+                $('#productEditInputName').val(data.name);
+                $('#productEditInputDesc').val(data.desc);
+                $('#productEditInputImage').val(data.image);
+                $('#productEditInputPrice').val(data.price);
+                $('#productEditInputRating').val(data.rating);
+                $('#productEditSubmit').data('id', id);
+            })
+        });
         //endregion
     })
 </script>
