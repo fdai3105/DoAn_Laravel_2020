@@ -100,6 +100,15 @@ class AdminCategoryController extends Controller
         return response()->json(['status' => 'success']);
     }
 
+    /** 
+     * Find all products in this brand.
+     */
+    public function findProducts($id)
+    {
+        $pro = Product::where('categories_id', $id)->get();
+        return response()->json($pro);
+    }
+    
     public function display()
     {
         $categories = Category::all();

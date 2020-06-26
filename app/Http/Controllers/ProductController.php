@@ -18,7 +18,7 @@ class ProductController extends Controller
     public function index()
     {
         $productsData = Product::all();
-        return view('admin.product.index', [
+        return view('product', [
             'productsData' => $productsData
         ]);
     }
@@ -31,7 +31,7 @@ class ProductController extends Controller
      */
     public function show($name)
     {
-      $product = Product::where('name', $name)->first();
+        $product = Product::where('name', $name)->first();
         return view('product', [
             'product' => $product
         ]);
@@ -43,10 +43,11 @@ class ProductController extends Controller
             return redirect()->back();
         }
 
-        $product = Product::where('name', 'like', '%' . $request->key . '%')->get();
+        $product = Product::where('name', 'like', '%' . $request->key . '%')->take(5)->get();
         return view('search', [
             'key' => $request->key,
             'search' => $product
         ]);
+        // return response()->json($product);
     }
 }

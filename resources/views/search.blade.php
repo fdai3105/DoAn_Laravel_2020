@@ -10,7 +10,7 @@
         <div class="row">
             @foreach($search as $search)
             <div class="col-3 product">
-                <a href="{{route('product',$search->name)}}">
+                <a href="{{route('product.show',$search->name)}}">
                     <div class="border">
                         <img src="{{$search->image}}">
                         <div class="product-body">

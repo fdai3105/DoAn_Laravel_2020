@@ -59,5 +59,45 @@
             </div>
         </div>
     </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div class="col-lg-6">
+                <canvas id="myChart2"></canvas>
+            </div>
+        </div>
+    </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script>
+    $(document).ready(function() {
+        c = JSON.parse('{{$products}}'.replace(/&quot;/g, '"'))
+        console.log(c);
+        var chart = new Chart($('#myChart'), {
+            type: 'line',
+            data: {
+                labels: ['2'],
+                datasets: [{
+                    label: 'My First dataset',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: ['2']
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    });
+</script>
 @endsection
