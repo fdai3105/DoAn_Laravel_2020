@@ -8,9 +8,9 @@
         </div>
         <div class="col-6 product-item">
             <div style="display:flex">
-                <h5>{{$product->category->name}}</h5>
+                <h5>{{$product->categories->name}}</h5>
                 <h5>&nbsp;|&nbsp;</h5>
-                <h5>{{$product->productBrand->name}}</h5>
+                <h5>{{$product->productBrands->name}}</h5>
             </div>
             <h4 class="text-title">{{$product->name}}</h4>
             <p class="text-price">{{number_format($product->price,0,'.','.')}}₫</p>
@@ -23,8 +23,26 @@
                         @endfor
                 </div>
             </div>
-            <button class="btn btn-dark add-to-cart">Thêm Vào Giỏ <i class="fa fa-cart-plus"></i></button>
+            <button class="btn btn-dark add-to-cart" id="addToCart" data-id="{{$product->id}}">Thêm Vào Giỏ <i class="fa fa-cart-plus"></i></button>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $("#addToCart").on("click", function() {
+            var id = $(this).data("id");
+            $.ajax({
+                type: "POST",
+                url: "{{url('cart')}}",
+                data: {
+                    "id": id
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
+        });
+    });
+</script>
 @endsection

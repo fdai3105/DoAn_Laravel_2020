@@ -26,10 +26,20 @@ Route::post('signup', 'LoginController@postSignup')->name('signup');
 Route::post('login', 'LoginController@postLogin')->name('login');
 Route::get('logout', 'LoginController@logout')->name('logout');
 
+Route::group(['middleware' => 'user'], function () {
+    Route::post('cart', 'CartController@addToCart');
+    Route::get('cart', 'CartController@index');
+    Route::post('decreaseQty', 'CartController@decreaseQty');
+    Route::post('incrementQty', 'CartController@incrementQty');
+    Route::post('removeCart', 'CartController@removeCart');
+    Route::post('checkout', 'CartController@checkout');
+});
+
+
 /**
  * adminPanel
  */
-Route::group(['prefix' => 'admin','namespace' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
     Route::get('login', ['as' => 'getLogin', 'uses' => 'AdminLoginController@getLogin']);
     Route::post('login', ['as' => 'postLogin', 'uses' => 'AdminLoginController@postLogin']);
     Route::get('logout', ['as' => 'getLogout', 'uses' => 'AdminLoginController@getLogout']);
@@ -40,6 +50,8 @@ Route::group(['prefix' => 'admin','namespace' => 'admin'], function () {
         Route::resource('products', 'AdminProductController');
         Route::resource('brands', 'AdminBrandController');
         Route::resource('categories', 'AdminCategoryController');
+        Route::resource('users', 'AdminUserController');
+        Route::resource('order', 'AdminOrderController');
 
         Route::get('categories/findProducts/{id}', 'AdminCategoryController@findProducts');
         Route::get('brands/findProducts/{id}', 'AdminBrandController@findProducts');

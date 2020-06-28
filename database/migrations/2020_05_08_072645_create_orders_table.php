@@ -16,9 +16,12 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->integer('id')->autoIncrement();
             $table->integer('users_id');
+            $table->string('status')->default('Pending');
+            $table->double('total');
+            $table->string('note');
             $table->timestamps();
 
-            $table->foreign('users_id')->references('id')->on('guest')->onDelete('cascade');
+            $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

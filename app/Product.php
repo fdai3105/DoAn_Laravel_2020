@@ -12,17 +12,17 @@ class Product extends Model
 
     public $timestamp = true;
 
-    public function productBrand()
+    public function productBrands()
     {
         return $this->belongsTo(ProductBrand::class, 'product_brands_id');
     }
 
-    public function category()
+    public function categories()
     {
         return $this->belongsTo(Category::class, 'categories_id');
     }
 
-    function order()
+    function orders()
     {
         return $this->belongsToMany('App\Order', 'order_details', 'order_id', 'product_id');
     }

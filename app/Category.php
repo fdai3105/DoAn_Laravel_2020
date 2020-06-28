@@ -12,7 +12,7 @@ class Category extends Model
 
     public $timestamp = true;
 
-    public function product()
+    public function products()
     {
         return $this->hasMany(Product::class, 'categories_id');
     }

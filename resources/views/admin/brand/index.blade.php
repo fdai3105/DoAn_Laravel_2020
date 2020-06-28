@@ -7,29 +7,19 @@
 </head>
 
 @section('content')
-<div class="col-sm-10" style="background-color:white;margin-left: 16.69%; padding: 0px;">
+<div class="col-sm-10">
     <!-- header -->
-    <div class="container-fluid">
-        <div class="row header">
-            <div class="col-2" style="display:flex">
-                <img src="https://img.icons8.com/material/24/ffffff/branding.png" />
-                <h5 style="vertical-align:middle">Brands</h5>
-            </div>
-            <div class="col-10" style="text-align: end;">
-                <h5>{{$brandsData->count()}} Items</h5>
-            </div>
-        </div>
-    </div>
-
-    <!-- sub-header -->
-    <div class="row sub-header">
-        <!-- add modal -->
-        <div class="col-12 right">
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#brandAddModal">
-                <i class="fa fa-plus"></i> Thêm Hãng
-            </button>
-        </div>
-    </div>
+    <nav class="shadow-sm" aria-label="breadcrumb">
+        <ol class="breadcrumb align-items-center">
+            <li class="breadcrumb-item"><a href="/admin"><i class="fa fa-home"></i> Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Categories</li>
+            <li class="ml-auto active" aria-current="page">
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#brandAddModal">
+                    <i class="fa fa-plus" style="color:white !important"></i> Thêm Hãng
+                </button>
+            </li>
+        </ol>
+    </nav>
 
     <!-- display errors -->
     @include('common.errors')
@@ -38,44 +28,48 @@
     @include('admin.brand.partials.del_modal')
 
     <!-- table -->
-    <table class="table table-hover" id="brandTable">
-        <thead>
-            <tr class="bg-primary">
-                <th>ID</th>
-                <th>Tên sản phẩm</th>
-                <th>Ngày Thêm</th>
-                <th>Ngày Sửa</th>
-                <th style="width: 10%; text-align:end">Hành động</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($brandsData as $brandsData)
-            <tr>
-                <td>{{$brandsData->id}}</td>
-                <td>{{$brandsData->name}}</td>
-                <td>{{$brandsData->created_at}}</td>
-                <td>{{$brandsData->updated_at}}</td>
-                <td>
-                    <div class="row action-button">
-                        <!-- edit button -->
-                        <div class="action-edit">
-                            <button type="button" id="brandModalEditBtn" data-id="{{$brandsData->id}}" class="btn btn-primary">
-                                <i class=" fa fa-btn fa-edit"></i> Sửa
-                            </button>
-                        </div>
+    <div class="shadow" style="margin-left: 20px;margin-right: 20px; border-radius: 20px;background-color:white; padding: 20px;margin-bottom: 20px;">
+        <h5>{{count($brandsData)}} Brands</h5>
 
-                        <!-- delete button -->
-                        <div class="action-delete">
-                            <button type="button" id="brandModalDelBtn" data-id="{{$brandsData->id}}" class="btn btn-danger">
-                                <i class="fa fa-btn fa-trash"></i> Xoá
-                            </button>
+        <table class="table table-borderless" id="brandTable">
+            <thead>
+                <tr style="border-bottom: 1px solid #dbdbdb">
+                    <th>ID</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Ngày Thêm</th>
+                    <th>Ngày Sửa</th>
+                    <th style="width: 10%; text-align:end">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($brandsData as $brandsData)
+                <tr>
+                    <td>{{$brandsData->id}}</td>
+                    <td>{{$brandsData->name}}</td>
+                    <td>{{$brandsData->created_at}}</td>
+                    <td>{{$brandsData->updated_at}}</td>
+                    <td>
+                        <div class="row action-button">
+                            <!-- edit button -->
+                            <div class="action-edit">
+                                <button type="button" id="brandModalEditBtn" data-id="{{$brandsData->id}}" class="btn btn-primary">
+                                    <i class=" fa fa-btn fa-edit"></i> Sửa
+                                </button>
+                            </div>
+
+                            <!-- delete button -->
+                            <div class="action-delete">
+                                <button type="button" id="brandModalDelBtn" data-id="{{$brandsData->id}}" class="btn btn-danger">
+                                    <i class="fa fa-btn fa-trash"></i> Xoá
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection
 

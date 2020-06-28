@@ -7,29 +7,19 @@
 </head>
 
 @section('content')
-<div class="col-sm-10" style="background-color:white;margin-left: 16.69%; padding :0">
+<div class="col-sm-10">
     <!-- header -->
-    <div class="container-fluid">
-        <div class="row header">
-            <div class="col-2" style="display:flex">
-                <img src="https://img.icons8.com/material/24/ffffff/product--v1.png" />
-                <h5 style="vertical-align:middle">Products</h5>
-            </div>
-            <div class="col-10" style="text-align: end;">
-                <h5>{{$productsData->count()}} Items</h5>
-            </div>
-        </div>
-    </div>
-
-    <!-- sub-header -->
-    <div class="row sub-header">
-        <!-- add modal -->
-        <div class="col-12 right">
-            <button type="btn" id="productModalAddBtn" data-target="#productAddModal" data-toggle="modal" class="btn btn-info btn-lg">
-                <i class="fa fa-plus"></i> Thêm Product
-            </button>
-        </div>
-    </div>
+    <nav class="shadow-sm" aria-label="breadcrumb">
+        <ol class="breadcrumb align-items-center">
+            <li class="breadcrumb-item"><a href="/admin"><i class="fa fa-home"></i> Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Categories</li>
+            <li class="ml-auto active" aria-current="page">
+                <button type="btn" id="productModalAddBtn" data-target="#productAddModal" data-toggle="modal" class="btn btn-info btn-lg">
+                    <i class="fa fa-plus" style="color:white !important"></i> Thêm Product
+                </button>
+            </li>
+        </ol>
+    </nav>
 
     <!-- display errors -->
     @include('common.errors')
@@ -38,54 +28,58 @@
     @include('admin.product.partials.del_modal')
 
     <!-- table -->
-    <table class="table table-hover" id="productTable">
-        <thead>
-            <tr class="bg-primary">
-                <th>ID</th>
-                <th style="width: 12%">Tên sản phẩm</th>
-                <th style="width: 12%">Mô tả</th>
-                <th>Ảnh</th>
-                <th>Giá</th>
-                <th>Thương Hiệu</th>
-                <th>Danh Mục</th>
-                <th>Ngày thêm</th>
-                <th>Ngày sửa</th>
-                <th style="width: 10%;text-align:end">Hành động</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($productsData as $productsData)
-            <tr>
-                <td>{{$productsData->id}}</td>
-                <td>{{$productsData->name}}</td>
-                <td data-toggle="tooltip" data-placement="bottom" title="{{$productsData->desc}}">{{Str::limit($productsData->desc,30)}}</td>
-                <td>{{Str::limit($productsData->image,20)}}</td>
-                <td>{{number_format($productsData->price,0,'.','.',)}}</td>
-                <td>{{$productsData->productBrand->name}}</td>
-                <td>{{$productsData->category->name}}</td>
-                <td>{{$productsData->created_at}}</td>
-                <td>{{$productsData->updated_at}}</td>
-                <td>
-                    <div class="row action-button">
-                        <!-- edit button -->
-                        <div class="action-edit">
-                            <button type="submit" id="productModalEditBtn" data-id="{{$productsData->id}}" class="btn btn-primary edit">
-                                <i class="fa fa-btn fa-edit"></i> Sửa
-                            </button>
-                        </div>
+    <div class="shadow" style="margin-left: 20px;margin-right: 20px; border-radius: 20px;background-color:white; padding: 20px;margin-bottom: 20px;">
+        <h5>{{count($productsData)}} Sản phẩm</h5>
 
-                        <!-- delete button -->
-                        <div class="action-delete">
-                            <button type="button" id="productModalDelBtn" data-id="{{$productsData->id}}" class="btn btn-danger">
-                                <i class="fa fa-btn fa-trash"></i> Xoá
-                            </button>
+        <table class="table table-borderless" id="productTable">
+            <thead>
+                <tr style="border-bottom: 1px solid #dbdbdb">
+                    <th scope="col">ID</th>
+                    <th scope="col">Tên sản phẩm</th>
+                    <th scope="col">Mô tả</th>
+                    <th v>Ảnh</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col">Thương Hiệu</th>
+                    <th scope="col">Danh Mục</th>
+                    <th scope="col">Ngày thêm</th>
+                    <th scope="col">Ngày sửa</th>
+                    <th scope="col" style="text-align:end">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($productsData as $productsData)
+                <tr>
+                    <th scope="row" style="color:#585858">{{$productsData->id}}</td>
+                    <td>{{$productsData->name}}</td>
+                    <td data-toggle="tooltip" data-placement="bottom" title="{{$productsData->desc}}">{{Str::limit($productsData->desc,30)}}</td>
+                    <td><a href="{{$productsData->image}}" target="_blank">{{Str::limit($productsData->image,20)}}</a></td>
+                    <td>{{number_format($productsData->price,0,'.','.',)}}</td>
+                    <td>{{$productsData->productBrands->name}}</td>
+                    <td>{{$productsData->categories->name}}</td>
+                    <td>{{$productsData->created_at}}</td>
+                    <td>{{$productsData->updated_at}}</td>
+                    <td>
+                        <div class="row action-button">
+                            <!-- edit button -->
+                            <div class="action-edit">
+                                <button type="submit" id="productModalEditBtn" data-id="{{$productsData->id}}" class="btn btn-primary edit">
+                                    <i class="fa fa-btn fa-edit"></i> Sửa
+                                </button>
+                            </div>
+
+                            <!-- delete button -->
+                            <div class="action-delete">
+                                <button type="button" id="productModalDelBtn" data-id="{{$productsData->id}}" class="btn btn-danger">
+                                    <i class="fa fa-btn fa-trash"></i> Xoá
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection
 
@@ -111,7 +105,8 @@
         });
         // style dataTable
         // header
-        $("#productTable_filter").addClass("col-12");
+        // $("#productTable").removeClass("dataTable")
+        $("#productTable_filter").addClass("col-12")
         $('#productTable_filter').find("input").addClass("form-control form-control-sm");
         //endregion
 

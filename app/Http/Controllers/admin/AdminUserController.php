@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Category;
 use App\Http\Controllers\Controller;
-use App\Product;
-use App\ProductBrand;
+use App\User;
 use Illuminate\Http\Request;
 
-class AdminProductController extends Controller
+class AdminUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +15,8 @@ class AdminProductController extends Controller
      */
     public function index()
     {
-        $productsData = Product::all();
-
-        return view('admin.product.index', [
-            'productsData' => $productsData
-        ]);
+        $user = User::all();
+        return view('admin.user.index', ['usersData' => $user]);
     }
 
     /**
@@ -31,7 +26,7 @@ class AdminProductController extends Controller
      */
     public function create()
     {
-        return route('products.create');
+       
     }
 
     /**
@@ -42,11 +37,7 @@ class AdminProductController extends Controller
      */
     public function store(Request $request)
     {
-        $product = Product::create($request->all());
-        if ($product) {
-            return response()->json(['status' => 'success']);
-        }
-        return redirect()->route('products.create');
+        //
     }
 
     /**
@@ -57,8 +48,7 @@ class AdminProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::findOrFail($id);
-        return response()->json($product);
+        //
     }
 
     /**
@@ -69,8 +59,7 @@ class AdminProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::findOrFail($id);
-        return response()->json($product);
+        //
     }
 
     /**
@@ -82,12 +71,7 @@ class AdminProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $editProduct = Product::find($id);
-        $editProduct->update($request->all());
-        if ($editProduct) {
-            return response()->json(['status' => 'success']);
-        }
-        return redirect()->route('products.edit');
+        //
     }
 
     /**
@@ -98,7 +82,6 @@ class AdminProductController extends Controller
      */
     public function destroy($id)
     {
-        Product::findOrFail($id)->delete();
-        return response()->json(['status' => 'success']);
+        //
     }
 }

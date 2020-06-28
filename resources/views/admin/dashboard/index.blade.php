@@ -1,7 +1,7 @@
 @extends('admin.index')
 
 @section('content')
-<div class="col-sm-10" style="background-color:white;margin-left: 16.69%; padding :0">
+<div class="col-sm-10">
     <div class="container-fluid">
         <div class="row header">
             <img src="https://img.icons8.com/material/144/ffffff/home--v5.png" />

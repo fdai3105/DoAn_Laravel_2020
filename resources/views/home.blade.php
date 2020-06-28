@@ -64,9 +64,9 @@
         </ul>
     </div>
     <div class=" link-icons">
-        <a href="">
+        <a href="{{url('cart')}}">
             <i class="fa fa-shopping-cart"></i>
-            <span>2</span>
+            <span>{{Cart::content()->count()}}</span>
         </a>
     </div>
 </nav>
@@ -283,12 +283,12 @@
                 return false
             }
 
-            if (grecaptcha.getResponse() == "") {
-                $("#signupErrors").html("");
-                $('#signupError').css('display', 'block')
-                $("#signupErrors").append("Captcha nè");
-                return false
-            }
+            // if (grecaptcha.getResponse() == "") {
+            //     $("#signupErrors").html("");
+            //     $('#signupError').css('display', 'block')
+            //     $("#signupErrors").append("Captcha nè");
+            //     return false
+            // }
 
             $.ajax({
                 type: "POST",

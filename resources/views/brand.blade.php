@@ -6,13 +6,13 @@
     <div class="container-fluid" style="margin-top:30px">
         <h4 style="text-transform:uppercase">{{$brand->name}}</h4>
         <div class="row">
-            @foreach($brand->product as $brandFilter)
+            @foreach($brand->products as $brandFilter)
             <div class="col-3 product">
                 <a href="{{route('product.show',$brandFilter->name)}}">
                     <div class="border">
                         <img src="{{$brandFilter->image}}">
                         <div class="product-body">
-                            <p id="cate">{{$brandFilter->category->name}}</p>
+                            <p id="cate">{{$brandFilter->categories->name}}</p>
                             <p id="name">{{$brandFilter->name}}</p>
                             <div class="row">
                                 <div class="col-6" id="vote">
