@@ -12,7 +12,7 @@
     <nav class="shadow-sm" aria-label="breadcrumb">
         <ol class="breadcrumb align-items-center">
             <li class="breadcrumb-item"><a href="/admin"><i class="fa fa-home"></i> Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Categories</li>
+            <li class="breadcrumb-item active" aria-current="page">Brands</li>
             <li class="ml-auto active" aria-current="page">
                 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#brandAddModal">
                     <i class="fa fa-plus" style="color:white !important"></i> Thêm Hãng
@@ -31,7 +31,7 @@
     <div class="shadow" style="margin-left: 20px;margin-right: 20px; border-radius: 20px;background-color:white; padding: 20px;margin-bottom: 20px;">
         <h5>{{count($brandsData)}} Brands</h5>
 
-        <table class="table table-borderless" id="brandTable">
+        <table class="table table-borderless table-hover" id="brandTable">
             <thead>
                 <tr style="border-bottom: 1px solid #dbdbdb">
                     <th>ID</th>
@@ -75,7 +75,6 @@
 
 <script>
     $(document).ready(function() {
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -174,7 +173,7 @@
                 $('#brandDelModal').modal('show');
                 $('#brandDelModalTitle').html('Xoá ' + data.name + '?');
                 $('#brandDelSubmit').data('id', id);
-                $.get("brands/findProducts/" + id, function(data2) {
+                $.get("brands/" + id + "/products", function(data2) {
                     $('#listProInBrand').html('');
                     if (Object.keys(data2).length > 1) {
                         var textnode = '';

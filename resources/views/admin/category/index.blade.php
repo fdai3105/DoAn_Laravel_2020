@@ -31,7 +31,7 @@
     <div class="shadow" style="margin-left: 20px;margin-right: 20px; border-radius: 20px;background-color:white; padding: 20px;margin-bottom: 20px;">
         <h5>{{count($categoriesData)}} Categories</h5>
 
-        <table class="table table-borderless" id="cateTable">
+        <table class="table table-borderless table-hover" id="cateTable">
             <thead>
                 <tr style="border-bottom: 1px solid #dbdbdb">
                     <th>ID</th>
@@ -173,7 +173,7 @@
                 $('#cateDelModal').modal('show');
                 $('#cateDelModalTitle').html('Xoá ' + data.name + '?');
                 $('#cateDelSubmit').data('id', id);
-                $.get("categories/" + id + "/edit", function(data2) {
+                $.get("categories/" + id + "/products", function(data2) {
                     $('#listProInCate').html("");
                     if (Object.keys(data2).length > 1) {
                         var textnode = '';

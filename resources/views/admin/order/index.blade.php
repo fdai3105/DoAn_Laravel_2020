@@ -26,7 +26,7 @@
     <!-- table -->
     <div class="shadow" style="margin-left: 20px;margin-right: 20px; border-radius: 20px;background-color:white; padding: 20px;margin-bottom: 20px;">
         <h5>{{$ordersData->count()}} Order</h5>
-        <table class="table table-borderless" id="brandTable">
+        <table class="table table-borderless table-hover" id="brandTable">
             <thead>
                 <tr style="border-bottom: 1px solid #dbdbdb;">
                     <th scope="col">ID</th>

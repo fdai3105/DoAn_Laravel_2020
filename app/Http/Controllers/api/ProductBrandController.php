@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Product;
 use App\ProductBrand;
 use Illuminate\Http\Request;
 
@@ -64,5 +65,10 @@ class ProductBrandController extends Controller
     public function destroy($id)
     {
         ProductBrand::findOrFail($id)->delete();
+    }
+
+    public function products($id) {
+        $products = Product::where('product_brands_id',$id)->get();
+        return $products;
     }
 }

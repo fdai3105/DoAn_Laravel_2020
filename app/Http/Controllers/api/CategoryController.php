@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Product;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -64,5 +65,11 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::findOrFail($id)->delete();
+    }
+
+    public function products($id)
+    {
+        $products = Product::where('categories_id', $id)->get();
+        return $products;
     }
 }

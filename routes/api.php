@@ -19,7 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['namespace' => 'api'], function () {
-    Route::apiResource('brand', 'ProductBrandController');
-    Route::apiResource('category', 'CategoryController');
-    Route::apiResource('product','ProductController');
+    Route::get('/','ApiController@index');
+    Route::apiResource('product', 'ProductController')->only(['index', 'show']);
+    Route::apiResource('brand', 'ProductBrandController')->only(['index','show']);
+    Route::get('brand/{id}/product', 'ProductBrandController@products');
+    Route::apiResource('category', 'CategoryController')->only(['index','show']);
+    Route::get('category/{id}/product', 'CategoryController@products');
 });

@@ -14,7 +14,7 @@
                     <div class="border">
                         <img src="{{$search->image}}">
                         <div class="product-body">
-                            <p id="cate">{{$search->productBrand->name}}</p>
+                            <p id="cate">{{$search->productBrands->name}}</p>
                             <p id="name">{{$search->name}}</p>
                             <div class="row">
                                 <div class="col-6" id="vote">

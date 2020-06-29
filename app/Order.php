@@ -31,7 +31,7 @@ class Order extends Model
 
     public function getCreatedAtAttribute($date)
     {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y H:i');
+        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('H:i d-m-Y');
     }
 
 }

@@ -14,9 +14,12 @@ class AdminCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $categories = Category::all();
+        if ($request->ajax()) {
+            return response()->json($categories);
+        }
         return view('admin.category.index', ['categoriesData' => $categories]);
     }
 
@@ -67,8 +70,8 @@ class AdminCategoryController extends Controller
      */
     public function edit($id)
     {
-        $pro = Product::where('categories_id', $id)->get();
-        return response()->json($pro);
+        $categoryForm = Category::findOrFail($id);
+        return response()->json($categoryForm);
     }
 
     /**
@@ -103,15 +106,9 @@ class AdminCategoryController extends Controller
     /** 
      * Find all products in this brand.
      */
-    public function findProducts($id)
+    public function products($id)
     {
         $pro = Product::where('categories_id', $id)->get();
         return response()->json($pro);
-    }
-    
-    public function display()
-    {
-        $categories = Category::all();
-        return response()->json($categories);
     }
 }

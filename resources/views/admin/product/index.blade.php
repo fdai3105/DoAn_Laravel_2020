@@ -12,7 +12,7 @@
     <nav class="shadow-sm" aria-label="breadcrumb">
         <ol class="breadcrumb align-items-center">
             <li class="breadcrumb-item"><a href="/admin"><i class="fa fa-home"></i> Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Categories</li>
+            <li class="breadcrumb-item active" aria-current="page">Products</li>
             <li class="ml-auto active" aria-current="page">
                 <button type="btn" id="productModalAddBtn" data-target="#productAddModal" data-toggle="modal" class="btn btn-info btn-lg">
                     <i class="fa fa-plus" style="color:white !important"></i> Thêm Product
@@ -31,7 +31,7 @@
     <div class="shadow" style="margin-left: 20px;margin-right: 20px; border-radius: 20px;background-color:white; padding: 20px;margin-bottom: 20px;">
         <h5>{{count($productsData)}} Sản phẩm</h5>
 
-        <table class="table table-borderless" id="productTable">
+        <table class="table table-borderless table-hover" id="productTable">
             <thead>
                 <tr style="border-bottom: 1px solid #dbdbdb">
                     <th scope="col">ID</th>
@@ -114,19 +114,20 @@
         //show dialog ADD modal by data-target on button tag
         $('#productModalAddBtn').on('click', function() {
             // get and set data to select box
-            $.get('brandsDisplay', function(data) {
+            $.get('{{route("brands.index")}}', function(data) {
                 $list = '';
                 data.forEach(element => {
                     $list += '<option value="' + element.id + '">' + element.name + '</option>';
                 });
                 $('#productSelectBrand').html($list);
             })
-            $.get('categoriesDisplay', function(data) {
+            $.get('{{route("categories.index")}}', function(data) {
                 $list = '';
                 data.forEach(element => {
                     $list += '<option value="' + element.id + '">' + element.name + '</option>';
                 });
                 $('#productSelectCate').html($list);
+                console.log(data);
             })
         })
         var productInputName = $("#productInputName");
@@ -222,14 +223,14 @@
                 $('#productEditInputPrice').val(data.price);
                 $('#productEditSubmit').data('id', id);
                 // get and set data to select box
-                $.get('brandsDisplay', function(data2) {
+                $.get('{{route("brands.index")}}', function(data2) {
                     $list = '';
                     data2.forEach(element => {
                         $list += '<option value="' + element.id + '"' + ((element.id == data.product_brands_id) ? 'selected' : '') + '>' + element.name + '</option>';
                     });
                     $('#productEditSelectBrand').html($list);
                 })
-                $.get('categoriesDisplay', function(data3) {
+                $.get('{{route("categories.index")}}', function(data3) {
                     $list = '';
                     data3.forEach(element => {
                         $list += '<option value="' + element.id + '"' + ((element.id == data.categories_id) ? 'selected' : '') + '>' + element.name + '</option>';

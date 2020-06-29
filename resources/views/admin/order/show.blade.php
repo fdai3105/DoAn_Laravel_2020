@@ -21,6 +21,11 @@
         padding-right: 0px !important;
 
     }
+
+    li {
+        list-style-type: circle;
+        list-style-position: inside;
+    }
 </style>
 @section('content')
 <div class="col-sm-10">
@@ -33,26 +38,48 @@
         </ol>
     </nav>
 
-    <div class="row" style="margin: 0px;justify-content: space-around;margin-bottom: 20px;">
-        <div class="col-lg-3 shadow" style="border-radius: 20px;background-color:white; padding: 20px;">
+    <div class="row row-padding">
+        <div class="col-lg-4 shadow" style="border-radius: 20px;background-color:white; padding: 20px;">
             <h5 style="text-align:center">Thông tin khách hàng</h5>
             <hr>
             <div class="row" style="margin:0;">
                 <div class="row">
                     <p class="col-5">Họ tên:</p>
-                    <p class="col">{{$orderData->user->name}}</p>
+                    <p class="col weight-500">{{$orderData->user->name}}</p>
                 </div>
                 <div class="row">
                     <p class="col-5">Số điện thoại:</p>
-                    <p class="col">{{$orderData->user->phone}}</p>
+                    <p class="col weight-500">{{$orderData->user->phone}}</p>
+                </div>
+                <div class="row">
+                    <p class="col-5">Tình trạng:</p>
+                    <div class="col">
+                        @switch($orderData->status)
+                        @case('Pending')
+                        <th style="text-align:center"><span class="badge badge-secondary pill">Pending</span></th>
+                        @break
+
+                        @case('Delivery')
+                        <th style="text-align:center"><span class="badge badge-warning pill">Delivery</span></th>
+                        @break
+
+                        @case('Complete')
+                        <th style="text-align:center"><span class="badge badge-success pill">Complete</span></th>
+                        @break
+
+                        @case('Cancel')
+                        <th style="text-align:center"><span class="badge badge-danger pill">Cancel</span></th>
+                        @break
+                        @endswitch
+                    </div>
                 </div>
                 <div class="row">
                     <p class="col-5">Email:</p>
-                    <p class="col">{{$orderData->user->email}}</p>
+                    <p class="col weight-500">{{$orderData->user->email}}</p>
                 </div>
                 <div class="row">
                     <p class="col-5">Địa chỉ:</p>
-                    <ul class="col">
+                    <ul class="col weight-500">
                         <li>{{$orderData->user->address->city}}</li>
                         <li>{{$orderData->user->address->district}}</li>
                         <li>{{$orderData->user->address->ward}}</li>
@@ -61,16 +88,16 @@
                 </div>
                 <div class="row">
                     <p class="col-5">Ghi chú:</p>
-                    <p class="col">{{$orderData->note}}</p>
+                    <p class="col weight-500">{{$orderData->note}}</p>
                 </div>
                 <div class="row">
                     <p class="col-5">Ngày đặt:</p>
-                    <p class="col-lg-7">{{$orderData->created_at}}</p>
+                    <p class="col-lg-7 weight-500">{{$orderData->created_at}}</p>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-8 shadow" style="border-radius: 20px;background-color:white; padding: 20px;">
+        <div class="col-lg-7 shadow" style="border-radius: 20px;background-color:white; padding: 20px;">
             <h5>Chi tiết đơn hàng</h5>
             <hr>
             <table class="table table-borderless table-hover">
@@ -100,8 +127,8 @@
         </div>
     </div>
 
-    <div class="row" style="justify-content: space-around;margin-bottom: 20px;">
-        <div class="col-lg-11 shadow" style="border-radius: 20px;background-color:white; padding: 20px;">
+    <div class="row-padding" style="margin-left: 33px;margin-right: 33px;">
+        <div class="shadow" style="border-radius: 20px;background-color:white; padding: 20px;">
             <h5>Timeline</h5>
             <hr>
         </div>

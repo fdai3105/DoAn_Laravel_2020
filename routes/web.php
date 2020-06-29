@@ -53,9 +53,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::resource('users', 'AdminUserController');
         Route::resource('order', 'AdminOrderController');
 
-        Route::get('categories/findProducts/{id}', 'AdminCategoryController@findProducts');
-        Route::get('brands/findProducts/{id}', 'AdminBrandController@findProducts');
-        Route::get('categoriesDisplay', 'AdminCategoryController@display');
-        Route::get('brandsDisplay', 'AdminBrandController@display');
+        Route::get('categories/{id}/products', 'AdminCategoryController@products');
+        Route::get('brands/{id}/products', 'AdminBrandController@products');
     });
 });

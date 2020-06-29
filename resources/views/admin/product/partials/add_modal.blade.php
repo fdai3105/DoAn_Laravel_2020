@@ -39,24 +39,33 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col control-label">Đánh giá</label>
-                        <div class="col">
-                            <input type="text" name="vote" id="productInputRating" class="form-control">
-                            <div class="invalid-tooltip">
-                                Please choose a unique and valid username.
+
+                    <div class="row">
+                        <div class="col" style="padding-right:0px">
+                            <div class="form-group">
+                                <label class="col control-label">Giá</label>
+                                <div class="col">
+                                    <input type="text" name="price" id="productInputPrice" class="form-control">
+                                    <div class="invalid-tooltip">
+                                        Please choose a unique and valid username.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4" style="padding-left: 0px">
+                            <div class="form-group">
+                                <label class="col control-label">Đánh giá</label>
+                                <div class="col">
+                                    <input type="text" name="vote" id="productInputRating" class="form-control">
+                                    <div class="invalid-tooltip">
+                                        Please choose a unique and valid username.
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col control-label">Giá</label>
-                        <div class="col">
-                            <input type="text" name="price" id="productInputPrice" class="form-control">
-                            <div class="invalid-tooltip">
-                                Please choose a unique and valid username.
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="form-group">
                         <label class="col control-label">Thương hiệu</label>
                         <div class="col">

@@ -42,23 +42,27 @@
                              </div>
                          </div>
                      </div>
-
-                     <div class="form-group">
-                         <label class="col control-label">Đánh giá</label>
-                         <div class="col">
-                             <input type="number" name="vote" id="productEditInputRating" max="5" min="0" class="form-control">
-                             <div class="invalid-tooltip">
-                                 Please choose a unique and valid username.
+                     <div class="row">
+                         <div class="col" style="padding-right:0px">
+                             <div class="form-group">
+                                 <label for="task-name" class="col control-label">Giá</label>
+                                 <div class="col">
+                                     <input type="number" id="productEditInputPrice" min="1000" max="any" step="1000" name="price" class="form-control">
+                                     <div class="invalid-tooltip">
+                                         Please choose a unique and valid username.
+                                     </div>
+                                 </div>
                              </div>
                          </div>
-                     </div>
-
-                     <div class="form-group">
-                         <label for="task-name" class="col control-label">Giá</label>
-                         <div class="col">
-                             <input type="number" id="productEditInputPrice" min="1000" max="any" step="1000" name="price" class="form-control">
-                             <div class="invalid-tooltip">
-                                 Please choose a unique and valid username.
+                         <div class="col-4" style="padding-left: 0px">
+                             <div class="form-group">
+                                 <label class="col control-label">Đánh giá</label>
+                                 <div class="col">
+                                     <input type="number" name="vote" id="productEditInputRating" max="5" min="0" class="form-control">
+                                     <div class="invalid-tooltip">
+                                         Please choose a unique and valid username.
+                                     </div>
+                                 </div>
                              </div>
                          </div>
                      </div>

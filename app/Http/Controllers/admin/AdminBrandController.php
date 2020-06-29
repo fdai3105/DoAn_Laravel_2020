@@ -14,9 +14,12 @@ class AdminBrandController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $brands = ProductBrand::all();
+        if ($request->ajax()) {
+            return response()->json($brands);
+        }
         return view('admin.brand.index', ['brandsData' => $brands]);
     }
 
@@ -104,15 +107,9 @@ class AdminBrandController extends Controller
     /** 
      * Find all products in this brand.
      */
-    public function findProducts($id)
+    public function products($id)
     {
         $brandForm = Product::where('product_brands_id', $id)->get();
         return response()->json($brandForm);
-    }
-
-    public function display()
-    {
-        $brands = ProductBrand::all();
-        return response()->json($brands);
     }
 }
