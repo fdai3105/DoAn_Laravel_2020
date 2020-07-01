@@ -50,10 +50,13 @@
                         null
                         @endswitch
                     </td>
-                    <td>{{$usersData->address->city}} -
+                    <td>
+                        @if(!is_null($usersData->address))
+                        {{$usersData->address->city}} -
                         {{$usersData->address->district}} <br>
                         {{$usersData->address->ward}} <br>
                         {{$usersData->address->street}}
+                        @endif
                     </td>
                     <td>{{$usersData->created_at}}</td>
                 </tr>

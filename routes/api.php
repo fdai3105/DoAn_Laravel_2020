@@ -25,4 +25,10 @@ Route::group(['namespace' => 'api'], function () {
     Route::get('brand/{id}/product', 'ProductBrandController@products');
     Route::apiResource('category', 'CategoryController')->only(['index','show']);
     Route::get('category/{id}/product', 'CategoryController@products');
+
+    Route::post('auth/register', 'UserController@register');
+    Route::post('auth/login', 'UserController@login');
+    Route::group(['middleware' => 'jwt.auth'], function () {
+        Route::get('user-info', 'UserController@getUserInfo');
+    });
 });
