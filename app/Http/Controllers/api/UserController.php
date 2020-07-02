@@ -68,7 +68,7 @@ class UserController extends Controller
         $token = JWTAuth::attempt($credentials);
         return response()->json([
             'message' => 'User created successfully',
-            'data' => $user,
+            'name' => $user->name,
             'token' => $token,
         ], 200);
     }
