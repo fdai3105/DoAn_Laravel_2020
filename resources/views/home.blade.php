@@ -83,6 +83,10 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="form-group" style="display: block;" id="loginError">
+                    <div class="col" style="color:red" id="loginErrors">
+                    </div>
+                </div>
                 <form id="loginForm" class="form-horizontal">
                     <div class="form-group" style="display: none;" id="error">
                         <div class="col">
@@ -228,7 +232,8 @@
                     if (data.status == 'success') {
                         location.reload();
                     } else {
-                        $('#error').css('display', 'block')
+                        $('#loginError').css('display', 'block')
+                        $('#loginErrors').html('<li>Sai tên đăng nhập hoặc mật khẩu</li>')
                     }
                 },
                 error: function(data) {

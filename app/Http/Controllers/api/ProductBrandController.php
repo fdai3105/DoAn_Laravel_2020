@@ -52,7 +52,6 @@ class ProductBrandController extends Controller
     {
         $productBrand = ProductBrand::findOrFail($id);
         $productBrand->update($request->all());
-        $productBrand->save();
         return $productBrand;
     }
 

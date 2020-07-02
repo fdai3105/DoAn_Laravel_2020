@@ -25,6 +25,27 @@ class UserController extends Controller
         return response()->json(['result' => $user]);
     }
 
+    public function editUser(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'email|unique:users',
+        ], [
+            'email.email' => 'Email không đúng định dạng.',
+            'email.unique' => 'Email đã có người sử dụng.',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 404);
+        }
+
+        $user = JWTAuth::toUser($request->token);
+        $user->update($request->all());
+        if ($user) {
+            return response()->json(['message' => 'User updated successfully'], 200);
+        } else {
+            return response()->json(['message' => 'User updated failed'], 400);
+        }
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->only('name', 'password');
@@ -68,7 +89,7 @@ class UserController extends Controller
         $token = JWTAuth::attempt($credentials);
         return response()->json([
             'message' => 'User created successfully',
-            'data' => $user,
+            'name' => $user->name,
             'token' => $token,
         ], 200);
     }

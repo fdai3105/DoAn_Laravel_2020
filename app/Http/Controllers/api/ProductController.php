@@ -52,7 +52,6 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $product->update($request->all());
-        $product->save();
         return $product;
     }
 

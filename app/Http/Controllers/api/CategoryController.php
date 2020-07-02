@@ -52,7 +52,6 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->update($request->all());
-        $category->save();
         return $category;
     }
 

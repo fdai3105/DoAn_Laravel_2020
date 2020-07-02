@@ -26,6 +26,7 @@ class VerifyJWTToken
             } else {
                 return response()->json(['error' => 'Token is required']);
             }
+            return response()->json(['error' => $e]);
         }
         return $next($request);
     }
