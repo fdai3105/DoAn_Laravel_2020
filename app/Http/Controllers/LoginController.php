@@ -37,7 +37,7 @@ class LoginController extends Controller
         return view('/');
     }
 
-    public function postSignup(UserRequest $request)
+    public function postSignup(Request $request)
     {
         $request['password'] = bcrypt($request->password);
         $user = User::create($request->all());
