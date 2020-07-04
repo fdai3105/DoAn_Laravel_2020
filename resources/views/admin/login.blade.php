@@ -13,9 +13,9 @@
                 @include('common.errors')
             </div>
             <div class="form-group">
-                <label class="col control-label">Username</label>
+                <label class="col control-label">Email</label>
                 <div class="col">
-                    <input type="text" class="form-control" name="txtName">
+                    <input type="text" class="form-control" name="email">
                     <div class="invalid-tooltip">
                         Please choose a unique and valid username.
                     </div>
@@ -24,7 +24,7 @@
             <div class="form-group">
                 <label class="col control-label">Password</label>
                 <div class="col">
-                    <input type="password" class="form-control" name="txtPassword">
+                    <input type="password" class="form-control" name="password">
                     <div class="invalid-tooltip">
                         Please choose a unique and valid username.
                     </div>

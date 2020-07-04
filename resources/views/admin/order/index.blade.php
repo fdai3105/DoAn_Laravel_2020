@@ -42,7 +42,7 @@
                 @foreach($ordersData as $orderData)
                 <tr>
                     <td>{{$orderData->id}}</td>
-                    <td>{{$orderData->user->name}}</td>
+                    <td>{{$orderData->user->fullname}}</td>
                     <td>{{number_format($orderData->total)}} VND</td>
                     <td>{{$orderData->note}}</td>
                     <td>{{$orderData->created_at}}</td>

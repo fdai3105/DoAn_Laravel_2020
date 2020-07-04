@@ -18,11 +18,7 @@ class CreateAddressesTable extends Migration
             $table->string('city')->nullable();
             $table->string('district')->nullable();
             $table->string('ward')->nullable();
-            $table->string('street')->nullable();
-            $table->integer('user_id');
-            $table->foreign('user_id')->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+            $table->string('street')->nullable();           
             $table->timestamps();
         });
     }

@@ -21,7 +21,7 @@ class LoginController extends Controller
     public function postLogin(Request $request)
     {
         $login = [
-            'name' => $request->name,
+            'email' => $request->email,
             'password' => $request->password,
         ];
 

@@ -35,7 +35,7 @@
                 @foreach($usersData as $usersData)
                 <tr>
                     <td>{{$usersData->id}}</td>
-                    <td>{{$usersData->name}}</td>
+                    <td>{{$usersData->fullname}}</td>
                     <td>{{$usersData->email}}</td>
                     <td>@switch($usersData->level)
                         @case(1)

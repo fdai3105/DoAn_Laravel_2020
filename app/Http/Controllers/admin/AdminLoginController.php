@@ -26,8 +26,8 @@ class AdminLoginController extends Controller
     public function postLogin(Request $request)
     {
         $login = [
-            'name' => $request->txtName,
-            'password' => $request->txtPassword,
+            'email' => $request->email,
+            'password' => $request->password,
         ];
 
         if (Auth::attempt($login)) {

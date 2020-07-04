@@ -45,7 +45,7 @@
             <div class="row" style="margin:0;">
                 <div class="row">
                     <p class="col-5">Họ tên:</p>
-                    <p class="col weight-500">{{$orderData->user->name}}</p>
+                    <p class="col weight-500">{{$orderData->user->fullname}}</p>
                 </div>
                 <div class="row">
                     <p class="col-5">Số điện thoại:</p>

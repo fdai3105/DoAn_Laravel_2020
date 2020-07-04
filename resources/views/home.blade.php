@@ -47,7 +47,7 @@
             @if (Auth::user())
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Hello, {{Auth::user()->name}}
+                    Hello, {{Auth::user()->fullname}}
                 </a>
                 <div class="dropdown-menu" id="navbarBrand" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="{{route('logout')}}">Đăng Xuất</a>
@@ -95,9 +95,9 @@
 
                     <div class="form-group">
                         <div class="col">
-                            <input type="text" name="name" id="loginInputName" placeholder="Enter username" class="form-control">
+                            <input type="text" name="email" id="loginInputEmail" placeholder="Enter username" class="form-control">
                             <div class="invalid-tooltip">
-                                Tên đăng nhập không được để trống.
+                                Email không được để trống.
                             </div>
                         </div>
                     </div>
@@ -137,9 +137,9 @@
                             </div>
                         </div>
                         <div class="col">
-                            <input type="text" name="name" placeholder="Enter username" id="signupInputName" class="form-control">
+                            <input type="text" name="fullname" placeholder="Họ tên" id="signupInputFullName" class="form-control">
                             <div class="invalid-tooltip">
-                                Tên đăng nhập không được để trống.
+                                Họ tên không được để trống.
                             </div>
                         </div>
                     </div>
@@ -205,8 +205,8 @@
         })
 
         // login
-        $('#loginInputName').on('keyup', function(e) {
-            $('#loginInputName').removeClass("is-invalid")
+        $('#loginInputEmail').on('keyup', function(e) {
+            $('#loginInputEmail').removeClass("is-invalid")
         });
         $('#loginInputPass').on('keyup', function(e) {
             $('#loginInputPass').removeClass("is-invalid")
@@ -214,9 +214,9 @@
         $("#loginSubmit").click(function(e) {
             e.preventDefault()
 
-            if ($('#loginInputName').val() == '' || $('#loginInputPass').val() == '') {
-                if ($('#loginInputName').val() == '') {
-                    $('#loginInputName').addClass("is-invalid")
+            if ($('#loginInputEmail').val() == '' || $('#loginInputPass').val() == '') {
+                if ($('#loginInputEmail').val() == '') {
+                    $('#loginInputEmail').addClass("is-invalid")
                 }
                 if ($('#loginInputPass').val() == '') {
                     $('#loginInputPass').addClass("is-invalid")
@@ -243,8 +243,8 @@
         })
 
         // signup
-        $("#signupInputName").keyup(function(e) {
-            $("#signupInputName").removeClass("is-invalid")
+        $("#signupInputFullName").keyup(function(e) {
+            $("#signupInputFullName").removeClass("is-invalid")
         });
         $("#signupInputEmail").keyup(function(e) {
             $("#signupInputEmail").removeClass("is-invalid")
@@ -258,10 +258,10 @@
         $('#signupSubmit').click(function(e) {
             e.preventDefault();
 
-            if ($("#signupInputName").val() == "" || $("#signupInputEmail").val() == "" ||
+            if ($("#signupInputFullName").val() == "" || $("#signupInputEmail").val() == "" ||
                 $("#signupInputPass").val() == "" || $("#signupInputPassAgain").val() == "") {
-                if ($("#signupInputName").val() == "") {
-                    $("#signupInputName").addClass("is-invalid")
+                if ($("#signupInputFullName").val() == "") {
+                    $("#signupInputFullName").addClass("is-invalid")
                 }
                 if ($("#signupInputEmail").val() == "") {
                     $("#signupInputEmail").addClass("is-invalid")
