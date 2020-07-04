@@ -50,15 +50,17 @@
                     Hello, {{Auth::user()->fullname}}
                 </a>
                 <div class="dropdown-menu" id="navbarBrand" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="" id="showEditModal">Chỉnh sửa</a>
                     <a class="dropdown-item" href="{{route('logout')}}">Đăng Xuất</a>
                 </div>
             </li>
+            @include('editUser')
             @else
             <li class="nav-item">
                 <div class="row" style="margin:0px">
-                    <a class="nav-link" href="" data-toggle="modal" data-target="#loginModal" style="padding-right: 0px;">Đăng Nhập</a>
+                    <a class="nav-link" data-toggle="modal" data-target="#loginModal" style="padding-right: 0px;">Đăng Nhập</a>
                     <a class="nav-link">/</a>
-                    <a class="nav-link" href="" data-toggle="modal" data-target="#signupModal" style="padding-left: 0px;">Đăng Ký</a>
+                    <a class="nav-link" data-toggle="modal" data-target="#signupModal" style="padding-left: 0px;">Đăng Ký</a>
                 </div>
             </li>
             @endif
@@ -67,13 +69,14 @@
     <div class=" link-icons">
         <a href="{{url('cart')}}">
             <i class="fa fa-shopping-cart"></i>
-            <span>{{Cart::content()->count()}}</span>
+            <span id="cartCount">{{Cart::content()->count()}}</span>
         </a>
     </div>
 </nav>
 
+
 <!-- Modal đăng nhập -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -120,7 +123,7 @@
 </div>
 
 <!-- Modal đăng ký -->
-<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -204,7 +207,10 @@
             $('#navbarBrand').append(bra);
         })
 
-        // login
+
+        /**
+         * login
+         */
         $('#loginInputEmail').on('keyup', function(e) {
             $('#loginInputEmail').removeClass("is-invalid")
         });

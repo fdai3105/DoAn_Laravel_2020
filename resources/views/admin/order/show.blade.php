@@ -80,10 +80,12 @@
                 <div class="row">
                     <p class="col-5">Địa chỉ:</p>
                     <ul class="col weight-500">
+                        @if ($orderData->user->address)
                         <li>{{$orderData->user->address->city}}</li>
                         <li>{{$orderData->user->address->district}}</li>
                         <li>{{$orderData->user->address->ward}}</li>
                         <li>{{$orderData->user->address->street}}</li>
+                        @endif
                     </ul>
                 </div>
                 <div class="row">

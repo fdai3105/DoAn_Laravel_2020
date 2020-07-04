@@ -41,6 +41,21 @@ class CartController extends Controller
         Cart::remove($item->rowId);
     }
 
+    public function changeQty(Request $request)
+    {
+        $id = $request->id;
+        $item = Cart::search(function ($key, $value) use ($id) {
+            return $key->id == $id;
+        })->first();
+        Cart::update($item->rowId, $item->qty = $request->qty);
+        return response()->json([
+            'qty' => $item->qty,
+            'totalItem' => $item->subtotal, 
+            'total' => Cart::subtotal(0, ','),
+
+        ]);
+    }
+
     /**
      * -
      */
@@ -51,6 +66,12 @@ class CartController extends Controller
             return $key->id == $id;
         })->first();
         Cart::update($item->rowId, $item->qty - 1);
+        return response()->json([
+            'qty' => $item->qty,
+            'totalItem' => $item->subtotal, 
+            'total' => Cart::subtotal(0, ','),
+
+        ]);
     }
 
     /**
@@ -63,6 +84,11 @@ class CartController extends Controller
             return $key->id == $id;
         })->first();
         Cart::update($item->rowId, $item->qty + 1);
+        return response()->json([
+            'qty' => $item->qty,
+            'totalItem' => $item->subtotal,
+            'total' => Cart::subtotal(0, ','),
+        ]);
     }
 
     /**

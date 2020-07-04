@@ -38,16 +38,16 @@
                 </td>
                 <td>
                     <div style="display:flex">
-                        <button class="btn btn-light decreaseQty" type="submit" data-id="{{$item->id}}"> + </button>
-                        <input class="form-control" type="text" style="margin: 0 6px 0 6px;width: 45px;text-align: center;" name="quantity" value="{{$item->qty}}" autocomplete="off">
-                        <button class="btn btn-light incrementQty" type="submit" data-id="{{$item->id}}"> + </button>
+                        <button data-id="{{$item->id}}" class="btn btn-light decreaseQty" type="submit"> - </button>
+                        <input id="inputQty{{$item->id}}" data-id="{{$item->id}}" name="quantity" value="{{$item->qty}}" class="form-control" type="number" style="margin: 0 6px 0 6px;width: 45px;text-align: center;" autocomplete="off">
+                        <button data-id="{{$item->id}}" class="btn btn-light incrementQty" type="submit"> + </button>
                     </div>
                 </td>
                 <td>
-                    <p class="cart_total_price">{{ number_format($item->subtotal)}} VNĐ</p>
+                    <p id="itemTotal{{$item->id}}">{{ number_format($item->subtotal)}} VNĐ</p>
                 </td>
                 <td>
-                    <button class="btn btn-danger" id="delete" data-id="{{$item->id}}"><i class="fa fa-times"></i></button>
+                    <button class="btn btn-danger delete" data-id="{{$item->id}}"><i class="fa fa-times"></i></button>
                 </td>
             </tr>
             @endforeach
@@ -55,7 +55,7 @@
     </table>
     <div class="row" style="margin:0px;text-align: right;align-items: center;justify-content: flex-end;">
         <p style="margin-right: 10px;">Tổng tiền hàng <br>({{count($cart)}} Sản phẩm)</p>
-        <h4 style="margin-bottom: 0px;margin-right: 10px;">₫{{Cart::subtotal(0,',')}}</h4>
+        <h4 id="total" style="margin-bottom: 0px;margin-right: 10px;">{{Cart::subtotal(0,',')}}₫</h4>
         <button class="btn btn-dark" id="checkout" style="padding: 13px 50px 13px 50px;">Thanh Toán</button>
     </div>
     @else
@@ -70,16 +70,43 @@
             }
         });
 
-        $(".decreaseQty").on("click", function(e) {
+        function addCommas(nStr) {
+            nStr += '';
+            x = nStr.split('.');
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            return x1 + x2;
+        }
+
+        $('input[name="quantity"]').focusout(function(e) {
             var id = $(this).data("id")
+            inputQty = $(this).val();
+            if (inputQty < 1) {
+                alert('Số lượng sản phẩm giới hạn từ 1 đến 50')
+                $(this).val(1)
+                return false
+            }
+            if (inputQty > 50) {
+                alert('Số lượng sản phẩm giới hạn từ 1 đến 50')
+                $(this).val(50)
+                return false
+            }
+
             $.ajax({
                 type: "POST",
-                url: "{{url('decreaseQty')}}",
+                url: "{{url('changeQty')}}",
                 data: {
-                    "id": id
+                    "id": id,
+                    'qty': inputQty,
                 },
                 success: function(data) {
-                    location.reload();
+                    $('#inputQty' + id).val(data.qty)
+                    $('#itemTotal' + id).html(addCommas(data.totalItem) + '₫')
+                    $('#total').html(addCommas(data.total) + '₫')
                 },
                 error: function(data) {
                     alert(data);
@@ -87,9 +114,40 @@
             });
         });
 
+        // -
+        $(".decreaseQty").on("click", function(e) {
+            id = $(this).data("id")
+            inputQty = $('#inputQty' + id)
+            if (inputQty.val() < 1) {
+                alert('Số lượng sản phẩm giới hạn từ 1 đến 50')
+                inputQty.val(1)
+                return false
+            }
+            if (inputQty.val() > 50) {
+                alert('Số lượng sản phẩm giới hạn từ 1 đến 50')
+                inputQty.val(50)
+                return false
+            }
+            $.ajax({
+                type: "POST",
+                url: "{{url('decreaseQty')}}",
+                data: {
+                    "id": id
+                },
+                success: function(data) {
+                    $('#inputQty' + id).val(data.qty)
+                    $('#itemTotal' + id).html(addCommas(data.totalItem) + '₫')
+                    $('#total').html(addCommas(data.total) + '₫')
+                },
+                error: function(data) {
+                    alert(data);
+                }
+            });
+        });
+
+        // +
         $(".incrementQty").on("click", function() {
             var id = $(this).data("id")
-            console.log(id)
             $.ajax({
                 type: "POST",
                 url: "{{url('incrementQty')}}",
@@ -97,7 +155,10 @@
                     "id": id
                 },
                 success: function(data) {
-                    location.reload();
+                    $('#inputQty' + id).val(data.qty)
+                    $('#itemTotal' + id).html(addCommas(data.totalItem) + '₫')
+                    $('#total').html(addCommas(data.total) + '₫')
+                    $('#cartCount').html(data.count)
                 },
                 error: function(data) {
                     alert(data);
@@ -106,7 +167,7 @@
             });
         })
 
-        $("#delete").on("click", function() {
+        $(".delete").on("click", function() {
             var id = $(this).data("id");
             $.ajax({
                 type: "POST",
@@ -121,6 +182,14 @@
         });
 
         $("#checkout").on("click", function() {
+            userId = '{{Auth::user()->id}}'
+            $.get("{{url('user')}}/" + userId, function(data) {
+                if (data.address_id == null) {
+                    alert('Vui lòng cập nhập thông tin địa chỉ đầy đủ')
+                    setData();
+                    return false;
+                }
+            });
             $.ajax({
                 type: "POST",
                 url: "{{url('checkout')}}",

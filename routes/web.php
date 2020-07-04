@@ -27,8 +27,12 @@ Route::post('login', 'LoginController@postLogin')->name('login');
 Route::get('logout', 'LoginController@logout')->name('logout');
 
 Route::group(['middleware' => 'user'], function () {
+    Route::resource('user', 'UserController');
+    Route::resource('address','AddressController');
+
     Route::post('cart', 'CartController@addToCart');
     Route::get('cart', 'CartController@index');
+    Route::post('changeQty', 'CartController@changeQty');
     Route::post('decreaseQty', 'CartController@decreaseQty');
     Route::post('incrementQty', 'CartController@incrementQty');
     Route::post('removeCart', 'CartController@removeCart');
