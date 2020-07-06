@@ -9,7 +9,7 @@
                  </button>
              </div>
              <div class="modal-body">
-                 <div class="form-group" style="display: block;" id="loginError">
+                 <div class="form-group" style="display: none;" id="loginError">
                      <div class="col" style="color:red" id="loginErrors">
                      </div>
                  </div>

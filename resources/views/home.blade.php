@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="{{ asset('css/body.css') }}">
 </head>
 
+<style>
+    li {
+        color: red !important;
+        font-weight: 500;
+    }
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/">FDai Store</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,19 +93,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group" style="display: block;" id="loginError">
-                    <div class="col" style="color:red" id="loginErrors">
+                <div class="form-group" style="display: none;" id="loginError">
+                    <div class="col" id="loginErrors">
                     </div>
                 </div>
                 <form id="loginForm" class="form-horizontal">
-                    <div class="form-group" style="display: none;" id="error">
-                        <div class="col">
-                        </div>
-                    </div>
-
                     <div class="form-group">
                         <div class="col">
-                            <input type="text" name="email" id="loginInputEmail" placeholder="Enter username" class="form-control">
+                            <input type="text" name="email" id="loginInputEmail" placeholder="Enter you email" class="form-control">
                             <div class="invalid-tooltip">
                                 Email không được để trống.
                             </div>
@@ -106,7 +108,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col">
-                            <input type="password" name="password" id="loginInputPass" placeholder="Enter pass" class="form-control">
+                            <input type="password" name="password" id="loginInputPass" placeholder="Enter you pass" class="form-control">
                             <div class="invalid-tooltip">
                                 Mật khẩu không được để trống.
                             </div>
@@ -124,7 +126,7 @@
 
 <!-- Modal đăng ký -->
 <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog w-25" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Đăng Ký</h5>
@@ -135,7 +137,7 @@
             <div class="modal-body">
                 <form id="signupForm" class="form-horizontal">
                     <div class="form-group">
-                        <div class="form-group" style="display: block;" id="signupError">
+                        <div class="form-group" style="display: none;" id="signupError">
                             <div class="col" style="color:red" id="signupErrors">
                             </div>
                         </div>
@@ -156,7 +158,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col">
-                            <input type="text" name="password" placeholder="Enter pass" id="signupInputPass" class="form-control">
+                            <input type="password" name="password" placeholder="Enter pass" id="signupInputPass" class="form-control">
                             <div class="invalid-tooltip" id="signupInputPassError">
                                 Mật khẩu không được để trống.
                             </div>
@@ -164,13 +166,17 @@
                     </div>
                     <div class="form-group">
                         <div class="col">
-                            <input type="text" name="passAgain" placeholder="Enter pass again" id="signupInputPassAgain" class="form-control">
+                            <input type="password" name="passAgain" placeholder="Enter pass again" id="signupInputPassAgain" class="form-control">
                             <div class="invalid-tooltip" id="signupInputPassAgainError">
                                 Nhập lại mật khẩu không được để trống.
                             </div>
                         </div>
                     </div>
-                    <div class="g-recaptcha" data-sitekey="6LdWe6kZAAAAAIg6BP0fNMAEMG-fu9yC_FlzKS4g"></div>
+                    <div class="form-group">
+                        <div class="col" style="display: flex;justify-content: center;">
+                            <div class="g-recaptcha" data-sitekey="6LdWe6kZAAAAAIg6BP0fNMAEMG-fu9yC_FlzKS4g"></div>
+                        </div>
+                    </div>
                     <div class="modal-footer">
                         <button type="submit" id="signupSubmit" class="btn btn-primary">Đăng Ký</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
@@ -208,6 +214,7 @@
         })
 
 
+        //region login
         /**
          * login
          */
@@ -217,9 +224,11 @@
         $('#loginInputPass').on('keyup', function(e) {
             $('#loginInputPass').removeClass("is-invalid")
         });
+        // submit
         $("#loginSubmit").click(function(e) {
             e.preventDefault()
 
+            $("#loginSubmit").html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading')
             if ($('#loginInputEmail').val() == '' || $('#loginInputPass').val() == '') {
                 if ($('#loginInputEmail').val() == '') {
                     $('#loginInputEmail').addClass("is-invalid")
@@ -236,19 +245,36 @@
                 data: $("#loginForm").serialize(),
                 success: function(data) {
                     if (data.status == 'success') {
-                        location.reload();
+                        location.reload()
+                    } else if (data.status == 'error') {
+                        $("#loginSubmit").html('Đăng nhập')
+                        $('#loginError').css('display', 'block')
+                        if (data.isValidator) {
+                            $("#loginErrors").html('')
+                            $.each(data.message, function(indexInArray, valueOfElement) {
+                                $('#loginErrors').append('<li>' + valueOfElement + '</li>')
+                            });
+                        } else {
+                            $('#loginErrors').html('<li>Sai tên đăng nhập hoặc mật khẩu</li>')
+                        }
                     } else {
                         $('#loginError').css('display', 'block')
-                        $('#loginErrors').html('<li>Sai tên đăng nhập hoặc mật khẩu</li>')
+                        $('#loginErrors').html('<li>Lỗi không xác định</li>')
                     }
                 },
                 error: function(data) {
-                    alert(data);
+                    $("#signupSubmit").html('')
+                    console.log(data)
+                    alert(data + " Lỗi server");
                 }
             });
         })
+        //endregion
 
-        // signup
+        //region signup
+        /**
+         * signup
+         */
         $("#signupInputFullName").keyup(function(e) {
             $("#signupInputFullName").removeClass("is-invalid")
         });
@@ -261,9 +287,11 @@
         $("#signupInputPassAgain").keyup(function(e) {
             $("#signupInputPassAgain").removeClass("is-invalid")
         });
+        // submit
         $('#signupSubmit').click(function(e) {
             e.preventDefault();
 
+            $("#signupSubmit").html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading')
             if ($("#signupInputFullName").val() == "" || $("#signupInputEmail").val() == "" ||
                 $("#signupInputPass").val() == "" || $("#signupInputPassAgain").val() == "") {
                 if ($("#signupInputFullName").val() == "") {
@@ -295,30 +323,45 @@
                 return false
             }
 
-            // if (grecaptcha.getResponse() == "") {
-            //     $("#signupErrors").html("");
-            //     $('#signupError').css('display', 'block')
-            //     $("#signupErrors").append("Captcha nè");
-            //     return false
-            // }
+            if (grecaptcha.getResponse() == "") {
+                $("#signupErrors").html("");
+                $('#signupError').css('display', 'block')
+                $("#signupErrors").append("Captcha nè");
+                return false
+            }
 
             $.ajax({
                 type: "POST",
                 url: "{{route('signup')}}",
                 data: $("#signupForm").serialize(),
                 success: function(data) {
-                    location.reload();
+                    if (data.status == "success") {
+                        location.reload();
+                    } else if (data.status = "error") {
+                        $("#signupSubmit").html('')
+                        $('#signupError').css("display", "block")
+                        $('#signupSubmit').html("Đăng ký")
+                        if (data.isValidator) {
+                            $('#signupErrors').html("") 
+                            $.each(data.message, function(indexInArray, valueOfElement) {
+                                $('#signupErrors').append("<li>" + valueOfElement + "</li>")
+                            });
+                        } else {
+                            $('#signupErrors').html("<li>Không thể đăng ký</li>")
+                        }
+                    } else {
+                        $('#signupErrors').html("<li>Lỗi không xác định</li>")
+                    }
                 },
                 error: function(data, message, error) {
-                    $('#signupErrors').html("")
-                    json = $.parseJSON(data.responseText);
-                    $.each(json.errors, function(key, value) {
-                        $('#signupError').css('display', 'block')
-                        $("#signupErrors").append("<li>" + value + "</li>");
-                    });
+                    $("#signupSubmit").html('')
+                    console.log(data + " - " + message + " - " + error)
+                    alert(message)
                 }
             });
         });
+        //endregion
+
 
         //region --live search
         // error when type utf8 char

@@ -46,6 +46,10 @@
                         User
                         @break
 
+                        @case(0)
+                        Guest
+                        @break
+                        
                         @default
                         null
                         @endswitch

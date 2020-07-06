@@ -20,10 +20,8 @@ Route::resource('brand', 'BrandController');
 Route::resource('product', 'ProductController');
 Route::get('search', 'ProductController@search')->name('search');
 
-// Route::get('signup', 'LoginController@getSignup')->name('signup');
-Route::post('signup', 'LoginController@postSignup')->name('signup');
-// Route::get('login', 'LoginController@getLogin')->name('login');
 Route::post('login', 'LoginController@postLogin')->name('login');
+Route::post('signup', 'LoginController@postSignup')->name('signup');
 Route::get('logout', 'LoginController@logout')->name('logout');
 
 Route::group(['middleware' => 'user'], function () {
@@ -59,5 +57,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
 
         Route::get('categories/{id}/products', 'AdminCategoryController@products');
         Route::get('brands/{id}/products', 'AdminBrandController@products');
+
+        Route::get('doanhthu','AdminController@doanhThu');
+        Route::get('countOrderByMonth', 'AdminController@countOrderByMonth');
+        Route::get('countCate', 'AdminController@countCate');
+
     });
 });
