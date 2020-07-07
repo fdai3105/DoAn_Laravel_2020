@@ -87,12 +87,16 @@ class UserController extends Controller
             'password' => Hash::make($request->get('password'))
         ]);
 
-        $credentials = $request->only('name', 'password');
-        $token = JWTAuth::attempt($credentials);
-        return response()->json([
-            'message' => 'User created successfully',
-            'name' => $user->name,
-            'token' => $token,
-        ], 200);
+        if ($user) {
+            $credentials = $request->only('fullname', 'name', 'password');
+            $token = JWTAuth::attempt($credentials);
+            return response()->json([
+                'message' => 'User created successfully',
+                'fullname' => $user->fullname,
+                'token' => $token,
+            ], 200);
+        } else {
+            return response()->json(['message' => 'Cannot created user'], 500);
+        }
     }
 }
