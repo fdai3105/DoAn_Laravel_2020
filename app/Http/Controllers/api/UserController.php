@@ -83,11 +83,10 @@ class UserController extends Controller
 
         $user = $this->user->create([
             'fullname' => $request->get('fullname'),
-            'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password'))
         ]);
-        
+
         $credentials = $request->only('name', 'password');
         $token = JWTAuth::attempt($credentials);
         return response()->json([
