@@ -64,10 +64,11 @@ class UserController extends Controller
     {
         // check form validation
         $validator = Validator::make($request->all(), [
+            'fullname' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required',
+            'password' => 'required|min:8',
         ], [
-            'name.required' => 'Tên đăng nhập không được để trống.',
+            'fullname.required' => 'Họ tên không được để trống.',
 
             'email.required' => 'Email không được để trống.',
             'email.email' => 'Email không đúng định dạng.',
@@ -81,10 +82,12 @@ class UserController extends Controller
         }
 
         $user = $this->user->create([
+            'fullname' => $request->get('fullname'),
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password'))
         ]);
+        
         $credentials = $request->only('name', 'password');
         $token = JWTAuth::attempt($credentials);
         return response()->json([
