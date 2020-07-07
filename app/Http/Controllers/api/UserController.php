@@ -88,7 +88,7 @@ class UserController extends Controller
         ]);
 
         if ($user) {
-            $credentials = $request->only('fullname', 'name', 'password');
+            $credentials = $request->only('fullname', 'password');
             $token = JWTAuth::attempt($credentials);
             return response()->json([
                 'message' => 'User created successfully',
