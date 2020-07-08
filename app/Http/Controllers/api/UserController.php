@@ -22,7 +22,7 @@ class UserController extends Controller
     public function getUserInfo(Request $request)
     {
         $user = JWTAuth::toUser($request->token);
-        return response()->json(['result' => $user]);
+        return response()->json($user);
     }
 
     public function editUser(Request $request)
@@ -48,7 +48,7 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('name', 'password');
+        $credentials = $request->only('email', 'password');
         $token = null;
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
@@ -80,6 +80,7 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 404);
         }
+
 
         $user = $this->user->create([
             'fullname' => $request->get('fullname'),
