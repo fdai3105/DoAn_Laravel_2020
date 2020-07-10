@@ -99,6 +99,7 @@
                     </div>
                 </div>
                 <form id="loginForm" class="form-horizontal">
+                    @csrf
                     {{ csrf_field() }}
                     <div class="form-group">
                         <div class="col">
