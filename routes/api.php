@@ -19,16 +19,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['namespace' => 'api'], function () {
-    Route::get('/','ApiController@index');
+    Route::get('/', 'ApiController@index');
     Route::apiResource('product', 'ProductController')->only(['index', 'show']);
-    Route::apiResource('brand', 'ProductBrandController')->only(['index','show']);
+    Route::apiResource('brand', 'ProductBrandController')->only(['index', 'show']);
     Route::get('brand/{id}/product', 'ProductBrandController@products');
-    Route::apiResource('category', 'CategoryController')->only(['index','show']);
+    Route::apiResource('category', 'CategoryController')->only(['index', 'show']);
     Route::get('category/{id}/product', 'CategoryController@products');
 
     Route::post('auth/register', 'UserController@register');
     Route::post('auth/login', 'UserController@login');
-    Route::group(['middleware' => 'jwt.auth'], function () {
+    Route::group(['middleware' => 'jwt.verify'], function () {
         Route::get('user-info', 'UserController@getUserInfo');
         Route::post('user-edit', 'UserController@editUser');
     });

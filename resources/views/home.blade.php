@@ -16,7 +16,8 @@
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">FDai Store</a>
+    <a class="navbar-brand" href="/">FDai Store
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -114,6 +115,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group form-check">
+                        <div class="col">
+                            <input class="form-check-input" name="rememberMe" type="checkbox" value="true" id="loginInputRemember">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Remember Me
+                            </label>
+                        </div>
+                    </div>
                     <div class="modal-footer">
                         <button type="submit" id="loginSubmit" class="btn btn-primary">Đăng nhập</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
@@ -123,7 +132,6 @@
         </div>
     </div>
 </div>
-
 <!-- Modal đăng ký -->
 <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModal" aria-hidden="true">
     <div class="modal-dialog w-25" role="document">
@@ -258,8 +266,10 @@
                             $('#loginErrors').html('<li>Sai tên đăng nhập hoặc mật khẩu</li>')
                         }
                     } else {
+                        $("#loginSubmit").html('Đăng nhập')
                         $('#loginError').css('display', 'block')
                         $('#loginErrors').html('<li>Lỗi không xác định</li>')
+                        console.log(data);
                     }
                 },
                 error: function(data) {
@@ -342,7 +352,7 @@
                         $('#signupError').css("display", "block")
                         $('#signupSubmit').html("Đăng ký")
                         if (data.isValidator) {
-                            $('#signupErrors').html("") 
+                            $('#signupErrors').html("")
                             $.each(data.message, function(indexInArray, valueOfElement) {
                                 $('#signupErrors').append("<li>" + valueOfElement + "</li>")
                             });

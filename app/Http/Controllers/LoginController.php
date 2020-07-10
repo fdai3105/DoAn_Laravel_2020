@@ -4,21 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\User;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
-    public function getLogin()
-    {
-        if (Auth::check()) {
-            return view('/');
-        } else {
-            return redirect()->back();
-        }
-    }
-
     public function postLogin(Request $request)
     {
         $login = [
@@ -44,17 +36,12 @@ class LoginController extends Controller
         if ($validator->fails()) {
             return response()->json(['status' => 'error', 'isValidator' => 'true', 'message' => $validator->errors()->all()]);
         }
-
-        if (Auth::attempt($login)) {
+        $remember = ($request->get('rememberMe') == null ? false : true);
+        if (Auth::attempt($login, $remember)) {
             return response()->json(['status' => 'success', 'message' => 'Login successful']);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Login failed']);
         }
-    }
-
-    public function getSignup()
-    {
-        return view('/');
     }
 
     public function postSignup(Request $request)
@@ -91,7 +78,7 @@ class LoginController extends Controller
         $request['password'] = bcrypt($request->password);
         $user = User::create($request->all());
         if ($user) {
-            Auth::login($user);
+            Auth::login($user, false);
             return response()->json(['status' => 'success', 'message' => 'Tạo user thành công.']);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Không thể tạo user:' + $user]);
@@ -100,6 +87,7 @@ class LoginController extends Controller
 
     public function logout()
     {
+        Cart::destroy();
         Auth::logout();
         return redirect()->back();
     }

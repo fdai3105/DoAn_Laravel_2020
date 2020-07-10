@@ -119,42 +119,19 @@
                  default:
                      break;
              }
-             $.get("{{url('address')}}/" + data.address_id, function(data2, textStatus) {
-                 $("#editUserCity").val(data2.city).change()
-                 $('#editUserDistrict').removeAttr('disabled')
-                 $("#editUserDistrict").val(data2.district)
-                 $('#editUserWard').removeAttr('disabled')
-             });
+             if (data.address_id != null) {
+                 $.get("{{url('address')}}/" + data.address_id, function(data2, textStatus) {
+                     $("#editUserCity").val(data2.city).change()
+                     $('#editUserDistrict').removeAttr('disabled')
+                     $("#editUserDistrict").val(data2.district)
+                     $('#editUserWard').removeAttr('disabled')
+                 });
+             }
          });
      }
      $("#showEditModal").click(function(e) {
-         e.preventDefault();
-         idUser = "{{Auth::user()->id}}"
-         $("#editUserModal").modal('show');
-         $.get("{{url('user')}}/" + idUser, function(data, textStatus) {
-             $("#editInputFullName").val(data.fullname);
-             $("#editInputEmail").val(data.email);
-             $("#editInputPhone").val(data.phone);
-             switch (data.gender) {
-                 case 'Male':
-                     $("#radioMale").prop("checked", true);
-                     break;
-                 case 'Female':
-                     $("#radioFemale").prop("checked", true);
-                     break;
-                 case 'Other':
-                     $("#radioOther").prop("checked", true);
-                     break;
-                 default:
-                     break;
-             }
-             $.get("{{url('address')}}/" + data.address_id, function(data2, textStatus) {
-                 $("#editUserCity").val(data2.city).change()
-                 $('#editUserDistrict').removeAttr('disabled')
-                 $("#editUserDistrict").val(data2.district)
-                 $('#editUserWard').removeAttr('disabled')
-             });
-         });
+         e.preventDefault()
+         setData()
      });
 
      // thành phố

@@ -82,6 +82,7 @@
             return x1 + x2;
         }
 
+
         $('input[name="quantity"]').focusout(function(e) {
             var id = $(this).data("id")
             inputQty = $(this).val();
@@ -181,25 +182,25 @@
             });
         });
 
-        $("#checkout").on("click", function() {
+        $("#checkout").click(function(e) {
+            e.preventDefault();
             userId = '{{Auth::user()->id}}'
             $.get("{{url('user')}}/" + userId, function(data) {
                 if (data.address_id == null) {
                     alert('Vui lòng cập nhập thông tin địa chỉ đầy đủ')
-                    setData();
-                    return false;
-                }
-            });
-            $.ajax({
-                type: "POST",
-                url: "{{url('checkout')}}",
-                // data: "note",
-                success: function(data) {
-                    location.reload();
+                    setData()
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: "{{url('checkout')}}",
+                        // data: "note",
+                        success: function(data) {
+                            location.reload();
+                        }
+                    });
                 }
             });
         });
-
     });
 </script>
 @endsection

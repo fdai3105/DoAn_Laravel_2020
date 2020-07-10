@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Facades\JWTFactory;
 
 class UserController extends Controller
 {
@@ -19,9 +20,9 @@ class UserController extends Controller
         $this->user = $user;
     }
 
-    public function getUserInfo(Request $request)
+    public function getUserInfo()
     {
-        $user = JWTAuth::toUser($request->token);
+        $user = JWTAuth::parseToken()->authenticate();
         return response()->json($user);
     }
 
@@ -51,13 +52,14 @@ class UserController extends Controller
         $credentials = $request->only('email', 'password');
         $token = null;
         try {
+            JWTAuth::factory()->setTTL(99999999999999999);
             if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json(['error' => 'invalid_email_or_password'], 401);
             }
         } catch (JWTException $e) {
             return response()->json(['failed_to_create_token'], 500);
         }
-        return response()->json(compact('token'), 200);
+        return response()->json(['token' => $token, 'expires_in' => JWTFactory::getTTL() * 60], 200);
     }
 
     public function register(Request $request)
@@ -85,7 +87,7 @@ class UserController extends Controller
         $user = $this->user->create([
             'fullname' => $request->get('fullname'),
             'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password'))
+            'password' => bcrypt($request->get('password'))
         ]);
 
         if ($user) {
