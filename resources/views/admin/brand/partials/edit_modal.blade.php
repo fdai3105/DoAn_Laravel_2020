@@ -11,11 +11,11 @@
                  <form id="editModalBrandForm" class="form-horizontal">
                      @method('PUT')
                      <div class="form-group">
-                         <label for="task-name" class="col control-label">Tên hãng:</label>
+                         <label for="task-name" class="col control-label">{{trans('admin.nameBrand')}}</label>
                          <div class="col">
                              <input type="text" id="brandEditModalInput" name="name" class="form-control">
                              <div class="invalid-feedback">
-                                 Please choose a username.
+                                 {{trans('admin.usernameEmpty')}}
                              </div>
                          </div>
                      </div>
@@ -23,9 +23,9 @@
                      <!--  -->
                      <div class="modal-footer">
                          <button type="submit" id="editBrandSubmit" class="btn btn-primary">
-                             <i></i>Edit
+                             <i></i>{{trans('admin.edit')}}
                          </button>
-                         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">{{trans('admin.cancel')}}</button>
                      </div>
                  </form>
              </div>

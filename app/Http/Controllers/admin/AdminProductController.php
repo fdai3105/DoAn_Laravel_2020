@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Product;
 use App\ProductBrand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AdminProductController extends Controller
 {
@@ -17,7 +18,7 @@ class AdminProductController extends Controller
      */
     public function index()
     {
-        $productsData = Product::all();
+        $productsData = Product::paginate(20); // 20 phải là hằng số, env
         return view('admin.product.index', [
             'productsData' => $productsData
         ]);
@@ -41,6 +42,22 @@ class AdminProductController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'price' => 'required|integer|min:0'
+            ],
+            [
+                'price.required' => 'Vui lòng nhập giá sản phẩm',
+                'price.min' => 'Giá sản phẩm không được dưới 0',
+                'price.integer' => 'Giá sản phẩm không được dưới 0',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 404);
+        }
+
         $product = Product::create($request->all());
         if ($product) {
             return response()->json(['status' => 'success']);
@@ -81,6 +98,35 @@ class AdminProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required',
+                'price' => 'required|integer|min:1000',
+                'vote' => 'required|min:0|max:5',
+                'product_brands_id' => 'required',
+                'categories_id' => 'required',
+            ],
+            [
+                'name.required' => 'Vui lòng nhập tên sản phẩm.',
+
+                'price.required' => 'Vui lòng nhập giá sản phẩm.',
+                'price.min' => 'Giá sản phẩm không được dưới 1000.',
+                'price.integer' => 'Giá sản phẩm không được dưới 1000.',
+
+                'vote.required' => 'Đánh giá không được để trống.',
+                'vote.min' => 'Đánh giá ít nhất là 0.',
+                'vote.max' => 'Đánh giá ít nhất là 5.',
+
+                'product_brands_id.required' => 'Thương hiệu không được để trống.',
+                'categories_id.required' => 'Danh mục không được để trống.',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json(['status' => 'error', 'isValidator' => 'true', 'message' => $validator->errors()->all()]);
+        }
+
         $editProduct = Product::find($id);
         $editProduct->update($request->all());
         if ($editProduct) {

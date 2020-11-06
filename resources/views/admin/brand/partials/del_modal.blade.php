@@ -16,9 +16,10 @@
                      <div class="modal-footer">
                          <!-- set data-id by ajax in admin/brand/index line 131 -->
                          <button type="submit" id="brandDelSubmit" class="btn btn-danger">
-                             <i class="fa fa-btn fa-trash"></i> Delete
+                             <i class="fa fa-btn fa-trash"></i>
+                             {{trans('admin.del')}}
                          </button>
-                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">{{trans('admin.cancel')}}</button>
                      </div>
                  </form>
              </div>

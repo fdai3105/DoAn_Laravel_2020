@@ -66,8 +66,19 @@ class ProductBrandController extends Controller
         ProductBrand::findOrFail($id)->delete();
     }
 
-    public function products($id) {
-        $products = Product::where('product_brands_id',$id)->get();
+    public function search(Request $request, $id)
+    {
+        $keyWord = $request->input('s');
+        $productBrand = Product::where("product_brands_id", $id)->where('name', 'like', "%$keyWord%")->get();
+        return api_success(array($productBrand));
+    }
+
+    /**
+     * Show all product in this brand
+     */
+    public function products($id)
+    {
+        $products = Product::where('product_brands_id', $id)->get();
         return $products;
     }
 }

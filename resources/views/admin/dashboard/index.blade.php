@@ -5,7 +5,12 @@
     <div class="container-fluid">
         <div class="row header">
             <img src="https://img.icons8.com/material/144/ffffff/home--v5.png" />
-            <h5 style="vertical-align:middle">Dashboard</h4>
+            <h5 style="vertical-align:middle">Dashboard</h5>
+            <div class="col" style="text-align: end">
+                <a style="color:white !important" href="{{ route('change-language', ['en']) }}">English</a>
+                /
+                <a style="color:white !important" href="{{ route('change-language', ['vi']) }}">Vietnamese</a>
+            </div>
         </div>
     </div>
     <div class="container-fluid dashboard">
@@ -76,6 +81,7 @@
         </div>
     </div>
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
@@ -157,6 +163,10 @@
             legend: {
                 display: false,
             },
+            title: {
+                display:true,
+                text:"Doanh thu theo tháng:"
+            },
             scales: {
                 yAxes: [{
                     ticks: {
@@ -194,6 +204,10 @@
             },
             legend: {
                 display: false,
+            },
+            title: {
+                display: true,
+                text: 'Số đơn hàng theo tháng:'
             },
             scales: {
                 yAxes: [{

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Product;
+use App\ProductBrand;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -66,6 +67,15 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id)->delete();
     }
 
+    public function search(Request $request, $id) {
+        $keyWord = $request->input('s');
+        $productBrand = Product::where("categories_id", $id)->where('name', 'like', "%$keyWord%")->get();
+        return api_success(array($productBrand));
+    }
+
+    /**
+     * Show all products in category
+     */
     public function products($id)
     {
         $products = Product::where('categories_id', $id)->get();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all();
+        $products =  Product::all();
+        return ProductResource::collection($products);
     }
 
     /**
@@ -53,6 +55,13 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->update($request->all());
         return $product;
+    }
+
+    public function search(Request $request)
+    {
+        $keyWord = $request->input('s');
+        $product = Product::where('name', 'like', "%$keyWord%")->get();
+        return api_success(array($product));
     }
 
     /**

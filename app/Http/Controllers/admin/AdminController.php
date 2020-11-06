@@ -29,10 +29,16 @@ class AdminController extends Controller
         ]);
     }
 
+    public function changeLanguage($language)
+    {
+        \Session::put('website_language', $language);
+        return redirect()->back();
+    }
+
     public function doanhThu()
     {
         $dtQuery = DB::table('orders')
-            ->select('total','created_at')
+            ->select('total', 'created_at')
             ->whereYear('created_at', '=', Carbon::now()->year)
             ->get()
             ->groupBy(function ($date) {

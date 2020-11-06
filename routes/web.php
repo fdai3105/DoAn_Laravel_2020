@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index');
 Route::get('navbarData', 'HomeController@navbar'); // use in ajax
+Route::get('/test', 'HomeController@sendReminderEmail'); // use in ajax
 Route::resource('category', 'CategoryController');
 Route::resource('brand', 'BrandController');
 Route::resource('product', 'ProductController');
@@ -26,7 +27,7 @@ Route::get('logout', 'LoginController@logout')->name('logout');
 
 Route::group(['middleware' => 'user'], function () {
     Route::resource('user', 'UserController');
-    Route::resource('address','AddressController');
+    Route::resource('address', 'AddressController');
 
     Route::post('cart', 'CartController@addToCart');
     Route::get('cart', 'CartController@index');
@@ -47,8 +48,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
     Route::get('logout', ['as' => 'getLogout', 'uses' => 'AdminLoginController@getLogout']);
 
     Route::group(['middleware' => 'admin'], function () {
-        Route::resource('/', 'AdminController');
+        Route::group(['middleware' => 'locale'], function () {
+            Route::get('change-language/{language}', 'AdminController@changeLanguage')
+                ->name('change-language');
+        });
 
+        Route::resource('/', 'AdminController');
         Route::resource('products', 'AdminProductController');
         Route::resource('brands', 'AdminBrandController');
         Route::resource('categories', 'AdminCategoryController');
@@ -58,9 +63,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
         Route::get('categories/{id}/products', 'AdminCategoryController@products');
         Route::get('brands/{id}/products', 'AdminBrandController@products');
 
-        Route::get('doanhthu','AdminController@doanhThu');
+        Route::get('doanhthu', 'AdminController@doanhThu');
         Route::get('countOrderByMonth', 'AdminController@countOrderByMonth');
         Route::get('countCate', 'AdminController@countCate');
-
     });
 });

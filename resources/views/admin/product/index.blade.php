@@ -1,21 +1,20 @@
 @extends('admin.index')
 
 <head>
-    <title>Sản Phẩm | Admin Panel</title>
+    <title>{{trans('admin.titleProduct')}}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 </head>
-
 @section('content')
 <div class="col-sm-10">
     <!-- header -->
     <nav class="shadow-sm" aria-label="breadcrumb">
         <ol class="breadcrumb align-items-center">
-            <li class="breadcrumb-item"><a href="/admin"><i class="fa fa-home"></i> Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Products</li>
+            <li class="breadcrumb-item"><a href="/admin"><i class="fa fa-home"></i> {{trans('admin.dashboard')}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{trans('admin.product')}}</li>
             <li class="ml-auto active" aria-current="page">
                 <button type="btn" id="productModalAddBtn" data-target="#productAddModal" data-toggle="modal" class="btn btn-info btn-lg">
-                    <i class="fa fa-plus" style="color:white !important"></i> Thêm Product
+                    <i class="fa fa-plus" style="color:white !important"></i> {{trans('admin.addProduct')}}
                 </button>
             </li>
         </ol>
@@ -29,48 +28,48 @@
 
     <!-- table -->
     <div class="shadow" style="margin-left: 20px;margin-right: 20px; border-radius: 20px;background-color:white; padding: 20px;margin-bottom: 20px;">
-        <h5>{{count($productsData)}} Sản phẩm</h5>
+        <h5>{{count($productsData)}} {{trans('admin.product')}}</h5>
 
         <table class="table table-borderless table-hover" id="productTable">
             <thead>
                 <tr style="border-bottom: 1px solid #dbdbdb">
-                    <th scope="col">ID</th>
-                    <th scope="col">Tên sản phẩm</th>
-                    <th scope="col">Mô tả</th>
-                    <th v>Ảnh</th>
-                    <th scope="col">Giá</th>
-                    <th scope="col">Thương Hiệu</th>
-                    <th scope="col">Danh Mục</th>
-                    <th scope="col">Ngày thêm</th>
-                    <th scope="col">Ngày sửa</th>
-                    <th scope="col" style="text-align:end">Hành động</th>
+                    <th scope="col">{{trans('admin.idProduct')}}</th>
+                    <th scope="col">{{trans('admin.nameProduct')}}</th>
+                    <th scope="col">{{trans('admin.descProduct')}}</th>
+                    <th scope="col">{{trans('admin.imgProduct')}}</th>
+                    <th scope="col">{{trans('admin.priceProduct')}}</th>
+                    <th scope="col">{{trans('admin.brand')}}</th>
+                    <th scope="col">{{trans('admin.category')}}</th>
+                    <th scope="col">{{trans('admin.dateAdd')}}</th>
+                    <th scope="col">{{trans('admin.dateEdit')}}</th>
+                    <th scope="col" style="text-align:end">{{trans('admin.action')}}</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($productsData as $productsData)
+                @foreach($productsData as $productData)
                 <tr>
-                    <th scope="row" style="color:#585858">{{$productsData->id}}</td>
-                    <td>{{$productsData->name}}</td>
-                    <td data-toggle="tooltip" data-placement="bottom" title="{{$productsData->desc}}">{{Str::limit($productsData->desc,30)}}</td>
-                    <td><a href="{{$productsData->image}}" target="_blank">{{Str::limit($productsData->image,20)}}</a></td>
-                    <td>{{number_format($productsData->price,0,'.','.',)}}</td>
-                    <td>{{$productsData->productBrands->name}}</td>
-                    <td>{{$productsData->categories->name}}</td>
-                    <td>{{$productsData->created_at}}</td>
-                    <td>{{$productsData->updated_at}}</td>
+                    <th scope="row" style="color:#585858">{{$productData->id}}</td>
+                    <td>{{$productData->name}}</td>
+                    <td data-toggle="tooltip" data-placement="bottom" title="{{$productData->desc}}">{{Str::limit($productData->desc,30)}}</td>
+                    <td><a href="{{$productData->image}}" target="_blank">{{Str::limit($productData->image,20)}}</a></td>
+                    <td>{{number_format($productData->price,0,'.','.',)}}</td>
+                    <td>{{$productData->productBrands->name}}</td>
+                    <td>{{$productData->categories->name}}</td>
+                    <td>{{$productData->created_at}}</td>
+                    <td>{{$productData->updated_at}}</td>
                     <td>
                         <div class="row action-button">
                             <!-- edit button -->
                             <div class="action-edit">
-                                <button type="submit" id="productModalEditBtn" data-id="{{$productsData->id}}" class="btn btn-primary edit">
-                                    <i class="fa fa-btn fa-edit"></i> Sửa
+                                <button type="submit" id="productModalEditBtn" data-id="{{$productData->id}}" class="btn btn-primary edit">
+                                    <i class="fa fa-btn fa-edit"></i> {{trans('admin.edit')}}
                                 </button>
                             </div>
 
                             <!-- delete button -->
                             <div class="action-delete">
-                                <button type="button" id="productModalDelBtn" data-id="{{$productsData->id}}" class="btn btn-danger">
-                                    <i class="fa fa-btn fa-trash"></i> Xoá
+                                <button type="button" id="productModalDelBtn" data-id="{{$productData->id}}" class="btn btn-danger">
+                                    <i class="fa fa-btn fa-trash"></i> {{trans('admin.del')}}
                                 </button>
                             </div>
                         </div>
@@ -79,6 +78,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{$productsData->links()}}
     </div>
 </div>
 @endsection
@@ -193,6 +193,7 @@
 
         //region edit product
         // show edit modal
+        var productEditInputPrice = $("#productEditInputPrice");
         $('#productEditInputName').on('keyup', function() {
             $('#productEditInputName').removeClass("is-invalid");
         })
@@ -207,9 +208,8 @@
         $('#productEditInputRating').on('keyup', function() {
             $('#productEditInputRating').removeClass("is-invalid");
         })
-        $('#productEditInputPrice').on('keyup', function() {
-            $('#productEditInputPrice').removeClass("is-invalid");
-
+        productEditInputPrice.on('keyup', function() {
+            productEditInputPrice.removeClass("is-invalid");
         })
         $("button[id='productModalEditBtn']").on('click', function() {
             var id = $(this).data("id");
@@ -240,7 +240,7 @@
             })
         });
         // edit action
-        $("button[id='productEditSubmit']").click(function(e) {
+        $("#productEditSubmit").click(function(e) {
             e.preventDefault();
             var id = $(this).data("id");
 
@@ -265,16 +265,30 @@
                 return false;
             }
 
+            if ($('#productEditInputRating').val() < 0 || $('#productEditInputRating').val() > 5) {
+                $('#productEditInputRating').addClass("is-invalid");
+                $('#invalid-vote').html('Vote từ 0 đến 5');
+                return false;
+            }
+
             $.ajax({
                 type: 'POST',
                 url: 'products/' + id,
                 data: $('#editModalProductForm').serialize(),
                 success: function(data) {
-                    $('#productEditModal').modal('hide');
-                    location.reload();
-                    console.log('Edit products ajax: ' + JSON.stringify(data));
+                    if (data.status == 'success') {
+                        $('#productEditModal').modal('hide');
+                        location.reload();
+                    }
+                    if (data.isValidator) {
+                        $('#editProductError').css('display', 'block');
+                        $('#editProErrors').html("")
+                        $.each(data.message, function(indexInArray, valueOfElement) {
+                            $('#editProErrors').append("<li style='color:red'>" + valueOfElement + "</li>")
+                        });
+                    }
                 },
-                error: function(data) {
+                error: function(data, message, error) {
                     alert(JSON.stringify(data));
                 }
             })

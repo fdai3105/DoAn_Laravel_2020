@@ -24,7 +24,7 @@ class Admin
                 return $next($request);
             } else {
                 Auth::logout();
-                return redirect()->route('getLogin')->withErrors('Bạn đéo có quyền');
+                return redirect()->route('getLogin')->withErrors('Bạn không có quyền');
             }
         } else {
             return redirect('admin/login');

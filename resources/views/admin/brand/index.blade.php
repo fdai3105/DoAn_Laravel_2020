@@ -1,7 +1,7 @@
 @extends('admin.index')
 
 <head>
-    <title>Thương Hiệu | Admin Panel</title>
+    <title>{{trans('admin.titleBrand')}}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 </head>
@@ -11,11 +11,11 @@
     <!-- header -->
     <nav class="shadow-sm" aria-label="breadcrumb">
         <ol class="breadcrumb align-items-center">
-            <li class="breadcrumb-item"><a href="/admin"><i class="fa fa-home"></i> Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/admin"><i class="fa fa-home"></i> {{trans('admin.dashboard')}}</a></li>
             <li class="breadcrumb-item active" aria-current="page">Brands</li>
             <li class="ml-auto active" aria-current="page">
                 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#brandAddModal">
-                    <i class="fa fa-plus" style="color:white !important"></i> Thêm Hãng
+                    <i class="fa fa-plus" style="color:white !important"></i> {{trans('admin.addBrand')}}
                 </button>
             </li>
         </ol>
@@ -29,16 +29,16 @@
 
     <!-- table -->
     <div class="shadow" style="margin-left: 20px;margin-right: 20px; border-radius: 20px;background-color:white; padding: 20px;margin-bottom: 20px;">
-        <h5>{{count($brandsData)}} Brands</h5>
+        <h5>{{count($brandsData)}} {{trans('admin.brand')}}</h5>
 
         <table class="table table-borderless table-hover" id="brandTable">
             <thead>
                 <tr style="border-bottom: 1px solid #dbdbdb">
-                    <th>ID</th>
-                    <th>Tên sản phẩm</th>
-                    <th>Ngày Thêm</th>
-                    <th>Ngày Sửa</th>
-                    <th style="width: 10%; text-align:end">Hành động</th>
+                    <th>{{trans('admin.idBrand')}}</th>
+                    <th>{{trans('admin.nameBrand')}}</th>
+                    <th>{{trans('admin.addDateBrand')}}</th>
+                    <th>{{trans('admin.editDateBrand')}}</th>
+                    <th style="width: 10%; text-align:end">{{trans('admin.action')}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,14 +53,16 @@
                             <!-- edit button -->
                             <div class="action-edit">
                                 <button type="button" id="brandModalEditBtn" data-id="{{$brandsData->id}}" class="btn btn-primary">
-                                    <i class=" fa fa-btn fa-edit"></i> Sửa
+                                    <i class=" fa fa-btn fa-edit"></i>
+                                    {{trans('admin.edit')}}
                                 </button>
                             </div>
 
                             <!-- delete button -->
                             <div class="action-delete">
                                 <button type="button" id="brandModalDelBtn" data-id="{{$brandsData->id}}" class="btn btn-danger">
-                                    <i class="fa fa-btn fa-trash"></i> Xoá
+                                    <i class="fa fa-btn fa-trash"></i>
+                                    {{trans('admin.del')}}
                                 </button>
                             </div>
                         </div>
@@ -171,19 +173,19 @@
             var id = $(this).data("id");
             $.get("brands/" + id, function(data) {
                 $('#brandDelModal').modal('show');
-                $('#brandDelModalTitle').html('Xoá ' + data.name + '?');
+                $('#brandDelModalTitle').html('{{trans("admin.del")}} ' + data.name + '?');
                 $('#brandDelSubmit').data('id', id);
                 $.get("brands/" + id + "/products", function(data2) {
                     $('#listProInBrand').html('');
                     if (Object.keys(data2).length > 1) {
                         var textnode = '';
-                        $('#countPro').html('Lưu ý: ' + Object.keys(data2).length + ' sản phẩm trong danh mục này cũng sẽ bị xoá')
+                        $('#countPro').html('{{trans("admin.alert")}} :' + Object.keys(data2).length + '{{trans("admin.alertDel")}}')
                         data2.forEach(element => {
                             textnode += '<dd>' + '- ' + element.name + '</dd>';
                         });
                         $('#listProInBrand').append(textnode);
                     } else {
-                        $('#countPro').html('Bạn có muốn xoá "' + data.name + '" ?');
+                        $('#countPro').html('{{trans("admin.alertDel2")}} ' + data.name + '" ?');
                     }
                 })
             })
