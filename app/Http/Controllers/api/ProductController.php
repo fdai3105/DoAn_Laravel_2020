@@ -40,7 +40,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return Product::findOrFail($id);
+        $products = Product::findOrFail($id);
+        return new ProductResource($products);
     }
 
     /**
